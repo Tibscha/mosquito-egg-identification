@@ -2,3 +2,4 @@
 *.tif
 *.jpg
 *.png
+/venv
