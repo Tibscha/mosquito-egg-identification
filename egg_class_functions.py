@@ -52,11 +52,11 @@ def resize_with_padding(image, target_width = 3088, target_height = 2076):
     # Berechne neue Gr��e, die ins Zielformat passt (mit ratio)
     if original_aspect > target_aspect:
         # Bild ist breiter -> Breite = target_width
-        new_width = target_width
+        new_width = int(target_width)
         new_height = int(target_width / original_aspect)
     else:
         # Bild ist h�her -> H�he = target_height
-        new_height = target_height
+        new_height = int(target_height)
         new_width = int(target_height * original_aspect)
 
     # Resize Bild auf neue Gr��e
@@ -64,13 +64,14 @@ def resize_with_padding(image, target_width = 3088, target_height = 2076):
     image_resized = image_resized.astype(np.uint8)  # Optional: uint8 R�ckwandlung
 
     # Padding berechnen
-    pad_height = target_height - new_height
-    pad_width = target_width - new_width
+    pad_height = int(target_height - new_height)
+    pad_width = int(target_width - new_width)
 
-    pad_top = pad_height // 2
-    pad_bottom = pad_height - pad_top
-    pad_left = pad_width // 2
-    pad_right = pad_width - pad_left
+    pad_top = int(pad_height // 2)
+    pad_bottom = int(pad_height - pad_top)
+    pad_left = int(pad_width // 2)
+    pad_right = int(pad_width - pad_left)
+
 
     # Padding hinzuf�gen (schwarz)
     if image_resized.ndim == 3:
@@ -80,7 +81,82 @@ def resize_with_padding(image, target_width = 3088, target_height = 2076):
 
     image_padded = np.pad(image_resized, padding, mode='constant', constant_values=0)
 
-    return image_padded
+    mask = np.zeros((int(target_height), int(target_width)), dtype=bool)
+    mask[pad_top:pad_top + new_height, pad_left:pad_left + new_width] = True
+
+    return image_padded, mask
+
+
+def egg_image_import(image_paths):
+    data = []
+    images = []
+    for path in image_paths:
+        image = skimage.io.imread(path)
+        
+        path = path
+        species = os.path.basename(os.path.dirname(path))
+        category = os.path.basename(os.path.dirname(os.path.dirname(path)))
+        data.append({
+            'path': path,
+            'category': category,
+            'species': species
+        })
+        images.append(image)
+
+    df = pd.DataFrame(data)
+    return images, df
+
+
+def region_sepperation(segment_mask):
+    mask_cleaned = remove_small_holes(segment_mask == 2, area_threshold=5000)
+    labeled_overlay = label(mask_cleaned)
+    labeled_overlay = erosion(labeled_overlay, footprint=footprint_rectangle((25, 25)))
+    labeled_overlay = remove_small_objects(labeled_overlay, min_size=20000)
+    labeled_overlay = dilation(labeled_overlay, footprint_rectangle((25, 25)), mode='ignore')
+    regions = regionprops(labeled_overlay)
+
+    return regions, labeled_overlay
+
+
+def region_processing(image, labeled_overlay, region):
+    
+    # cutting out the specified region out of an image
+    minr, minc, maxr, maxc = region.bbox
+    cropped_image = image[minr:maxr, minc:maxc]
+    mask = labeled_overlay[minr:maxr, minc:maxc] == region.label
+    masked_image = np.zeros_like(cropped_image)
+    for c in range(cropped_image.shape[2]):
+        masked_image[..., c] = cropped_image[..., c] * mask
+    image_gray = skimage.color.rgb2gray(masked_image)
+
+    # get measure parameters for each segment and saving them to a specified list
+    angle = region.orientation
+    area = region.area
+    perimeter = region.perimeter
+    roundness = 4 * np.pi * area / (perimeter ** 2) if perimeter != 0 else 0
+    length = region.axis_major_length
+    width = region.axis_minor_length
+    ratio = length / width
+    laplacian = ecf.measure_sharpness(image_gray)
+    edge = ecf.gradient_sharpness(image_gray)
+    
+    data = {
+        'angle': angle,
+        'area': area,
+        'perimeter': perimeter,
+        'roundness': roundness,
+        'length': length,
+        'width': width,
+        'len_wid_ratio': ratio,
+        'laplacian' : laplacian,
+        'edge': edge
+    }
+
+    return masked_image, mask, data
+
+
+def save_image(save_path, image, name):
+    skimage.io.imsave(f"{save_path}/{name}.png", img_as_ubyte(image))
 
 
 def egg_segmentation(image_paths, seg_model, height, width, save_path=None):
@@ -109,97 +185,96 @@ def egg_segmentation(image_paths, seg_model, height, width, save_path=None):
     data = []
     
     for i, path in enumerate(image_paths):
-        try:
-            image = skimage.io.imread(path)
-            images.append(image)
-            path = path
-            lab = os.path.basename(os.path.dirname(path)),
-            category = os.path.basename(os.path.dirname(os.path.dirname(path)))
+        image = skimage.io.imread(path)
+        
+        path = path
+        species = os.path.basename(os.path.dirname(path))
+        category = os.path.basename(os.path.dirname(os.path.dirname(path)))
 
-            # adjust the image to specified size. ratio is kept missing pixels are padded
-            if image.shape[0] != height and image.shape[1] != width:
-                ecf.resize_with_padding(image, width, height)
+        # adjust the image to specified size. ratio is kept missing pixels are padded
+        if image.shape[:2] != (height, width):
+            image, content_mask = ecf.resize_with_padding(image, width, height)
+        else:
+            content_mask = np.ones((height, width), dtype=bool)
 
-            # calling segmentation function to get a segmentation mask
-            segment_mask = ecf.segmentation(image, seg_model)
+        # calling segmentation function to get a segmentation mask
+        segment_mask = ecf.segmentation(image, seg_model)
+        if image.shape[:2] != (height, width):
+            segment_mask[~content_mask] = 1
 
-            # improving segmentation mask with various skimage methods
-            mask_cleaned = remove_small_holes(segment_mask == 2, area_threshold=5000)
-            labeled_overlay = label(mask_cleaned)
-            labeled_overlay = erosion(labeled_overlay, footprint=footprint_rectangle((25, 25)))
-            labeled_overlay = remove_small_objects(labeled_overlay, min_size=20000)
-            labeled_overlay = dilation(labeled_overlay, footprint_rectangle((25, 25)), mode='ignore')
-            regions = regionprops(labeled_overlay)
+        # improving segmentation mask with various skimage methods
+        mask_cleaned = remove_small_holes(segment_mask == 2, area_threshold=5000)
+        labeled_overlay = label(mask_cleaned)
+        labeled_overlay = erosion(labeled_overlay, footprint=footprint_rectangle((25, 25)))
+        labeled_overlay = remove_small_objects(labeled_overlay, min_size=20000)
+        labeled_overlay = dilation(labeled_overlay, footprint_rectangle((25, 25)), mode='ignore')
+        regions = regionprops(labeled_overlay)
+        
+        images.append(image)
+        segment_masks.append(labeled_overlay)
 
-            segment_masks.append(labeled_overlay)
+        # divide picture into segmented areas
+        for j, region in enumerate(regions):
+            minr, minc, maxr, maxc = region.bbox
+            cropped_image = image[minr:maxr, minc:maxc]
+            mask = labeled_overlay[minr:maxr, minc:maxc] == region.label
+            masked_image = np.zeros_like(cropped_image)
+            for c in range(cropped_image.shape[2]):
+                masked_image[..., c] = cropped_image[..., c] * mask
+            image_gray = skimage.color.rgb2gray(masked_image)
+            
+            # saving image and corresponding mask for each segment
+            segments.append(masked_image)
+            masks.append(mask)
 
-        except Exception as e:
-            print(f"Error processing path {path}: {e}")
+            if save_path != None:
+                skimage.io.imsave(f"{save_path}/segment_images/{category[0]}_image_{i}_segment_{j}.png", img_as_ubyte(masked_image))
+                skimage.io.imsave(f"{save_path}/segment_masks/{category[0]}_mask_{i}_segment_{j}.png", img_as_ubyte(mask))
 
-                # divide picture into segmented areas
-            for j, region in enumerate(regions):
-                try:
-                    minr, minc, maxr, maxc = region.bbox
-                    cropped_image = image[minr:maxr, minc:maxc]
-                    mask = labeled_overlay[minr:maxr, minc:maxc] == region.label
-                    masked_image = np.zeros_like(cropped_image)
-                    for c in range(cropped_image.shape[2]):
-                        masked_image[..., c] = cropped_image[..., c] * mask
-                    image_gray = skimage.color.rgb2gray(masked_image)
-                    
-                    # saving image and corresponding mask for each segment when in training mode
-                    segments.append(masked_image)
-                    masks.append(mask)
+            # get measure parameters for each segment and saving them to a specified list
+            angle = region.orientation
+            area = region.area
+            perimeter = region.perimeter
+            roundness = 4 * np.pi * area / (perimeter ** 2) if perimeter != 0 else 0
+            length = region.axis_major_length
+            width = region.axis_minor_length
+            ratio = length / width
+            laplacian = ecf.measure_sharpness(image_gray)
+            edge = ecf.gradient_sharpness(image_gray)
+            
+            if save_path != None:
+                data.append({
+                    'path': path,
+                    'device': category,
+                    'species': species,
+                    'image': i,
+                    'segment': j,
+                    'angle': angle,
+                    'area': area,
+                    'perimeter': perimeter,
+                    'roundness': roundness,
+                    'length': length,
+                    'width': width,
+                    'len_wid_ratio': ratio,
+                    'laplacian' : laplacian,
+                    'edge': edge
+                })
+            else:
+                data.append({
+                    'path': path,
+                    'image': i,
+                    'segment': j,
+                    'angle': angle,
+                    'area': area,
+                    'perimeter': perimeter,
+                    'roundness': roundness,
+                    'length': length,
+                    'width': width,
+                    'len_wid_ratio': ratio,
+                    'laplacian' : laplacian,
+                    'edge': edge
+                })
 
-                    if save_path != None:
-                        skimage.io.imsave(f"{save_path}/segment_images/{category[0]}_image_{i}_segment_{j}.png", img_as_ubyte(masked_image))
-                        skimage.io.imsave(f"{save_path}/segment_masks/{category[0]}_mask_{i}_segment_{j}.png", img_as_ubyte(mask))
-
-                    # get measure parameters for each segment and saving them to a specified list
-                    angle = region.orientation
-                    area = region.area
-                    perimeter = region.perimeter
-                    roundness = 4 * np.pi * area / (perimeter ** 2) if perimeter != 0 else 0
-                    length = region.axis_major_length
-                    width = region.axis_minor_length
-                    ratio = length / width
-                    laplacian = ecf.measure_sharpness(image_gray)
-                    edge = ecf.gradient_sharpness(image_gray)
-                    
-                    if save_path != None:
-                        data.append({
-                            'path': path,
-                            'device': category,
-                            'species': lab,
-                            'image': i,
-                            'segment': j,
-                            'angle': angle,
-                            'area': area,
-                            'perimeter': perimeter,
-                            'roundness': roundness,
-                            'length': length,
-                            'width': width,
-                            'len_wid_ratio': ratio,
-                            'laplacian' : laplacian,
-                            'edge': edge
-                        })
-                    else:
-                        data.append({
-                            'path': path,
-                            'image': i,
-                            'segment': j,
-                            'angle': angle,
-                            'area': area,
-                            'perimeter': perimeter,
-                            'roundness': roundness,
-                            'length': length,
-                            'width': width,
-                            'len_wid_ratio': ratio,
-                            'laplacian' : laplacian,
-                            'edge': edge
-                        })
-                except Exception as e:
-                    print(f"Error processing image: {i}, segment: {j}: {e}")
     df = pd.DataFrame(data)
     if save_path != None:
         df.to_csv(f"{save_path}/segmentation_data.csv")
