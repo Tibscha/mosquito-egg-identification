@@ -87,7 +87,7 @@ def resize_with_padding(image, target_width = 3088, target_height = 2076):
     return image_padded, mask
 
 
-def egg_image_import(image_paths):
+def egg_image_data_import(image_paths):
     data = []
     images = []
     for path in image_paths:
@@ -106,6 +106,13 @@ def egg_image_import(image_paths):
     df = pd.DataFrame(data)
     return images, df
 
+
+def egg_image_import(image_paths):
+    images = []
+    for path in image_paths:
+        image = skimage.io.imread(path)
+        images.append(image)
+    return images
 
 def region_sepperation(segment_mask):
     mask_cleaned = remove_small_holes(segment_mask == 2, area_threshold=5000)
@@ -157,6 +164,10 @@ def region_processing(image, labeled_overlay, region):
 
 def save_image(save_path, image, name):
     skimage.io.imsave(f"{save_path}/{name}.png", img_as_ubyte(image))
+
+
+def make_key(row):
+    return f"image_{row['image_index']}_segment_{row['region_index']}.png"
 
 
 def egg_segmentation(image_paths, seg_model, height, width, save_path=None):
