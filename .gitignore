@@ -3,3 +3,7 @@
 *.jpg
 *.png
 /venv
+models/.weights.h5
+models/mask_rcnn_coco.h5
+models/model.h5
+models/model.keras

@@ -3,23 +3,29 @@ import skimage
 import egg_class_functions as ecf
 import numpy as np
 import pandas as pd
-from skimage import transform, io, img_as_ubyte, filters
+import matplotlib.pyplot as plt
+import tensorflow as tf
+from skimage import transform, filters, io
 from skimage.measure import label, regionprops
 from skimage.morphology import remove_small_objects, erosion, dilation, footprint_rectangle, remove_small_holes
-from skimage.util import img_as_ubyte
+from skimage.transform import rotate, resize
+from tensorflow.keras.applications.efficientnet_v2 import preprocess_input
 
 
 def segmentation(image, model):
     """
-    Perform segmentation on the given image using the 
-    specified napari-convpaint model.
+    Perform image segmentation using the specified model.
+
+    The function optionally reorders image axes if the input is in (H, W, C) format,
+    then passes the image to the provided segmentation model.
 
     Args:
-        image (numpy.ndarray): The input image to be segmented.
-        model (object): The segmentation model to use.
+        image (numpy.ndarray): Input image, expected in shape (H, W, C) with 3 channels.
+        model (object): A segmentation model with a `.segment()` method. For example,
+                        a napari-convpaint model.
 
     Returns:
-        numpy.ndarray: The segmented output.
+        numpy.ndarray: The segmentation result as returned by the model.
     """
 
     if image.shape[2] == 3:
@@ -40,30 +46,40 @@ def gradient_sharpness(image_gray):
     return np.mean(edge)
 
 
-def resize_with_padding(image, target_width = 3088, target_height = 2076):
+def resize_with_padding(image, target_width=3088, target_height=2076):
     """
-    Skaliert ein Bild auf die maximale Gr��e innerhalb von target_width x target_height
-    unter Beibehaltung des Seitenverh�ltnisses, und f�gt schwarzen Rand (Padding) hinzu.
+    Resize an image while preserving its aspect ratio, and pad it to match the target dimensions.
+
+    The function scales the input image to fit within the target size, maintaining the original 
+    aspect ratio. The remaining space is filled with padding (black pixels). Additionally, a 
+    boolean mask is returned that indicates the area occupied by the resized image 
+    (i.e., the non-padded region).
+
+    Args:
+        image (ndarray): Input image as a NumPy array.
+        target_width (int, optional): Target width in pixels. Default is 3088.
+        target_height (int, optional): Target height in pixels. Default is 2076.
+
+    Returns:
+        tuple:
+            image_padded (ndarray): The resized and padded image.
+            mask (ndarray of bool): A boolean mask where `True` indicates the region
+                                    corresponding to the original (resized) image.
     """
     original_height, original_width = image.shape[:2]
     target_aspect = target_width / target_height
     original_aspect = original_width / original_height
 
-    # Berechne neue Gr��e, die ins Zielformat passt (mit ratio)
     if original_aspect > target_aspect:
-        # Bild ist breiter -> Breite = target_width
         new_width = int(target_width)
         new_height = int(target_width / original_aspect)
     else:
-        # Bild ist h�her -> H�he = target_height
         new_height = int(target_height)
         new_width = int(target_height * original_aspect)
 
-    # Resize Bild auf neue Gr��e
     image_resized = transform.resize(image, (new_height, new_width), preserve_range=True, anti_aliasing=True)
-    image_resized = image_resized.astype(np.uint8)  # Optional: uint8 R�ckwandlung
+    image_resized = image_resized.astype(np.uint8)
 
-    # Padding berechnen
     pad_height = int(target_height - new_height)
     pad_width = int(target_width - new_width)
 
@@ -72,8 +88,6 @@ def resize_with_padding(image, target_width = 3088, target_height = 2076):
     pad_left = int(pad_width // 2)
     pad_right = int(pad_width - pad_left)
 
-
-    # Padding hinzuf�gen (schwarz)
     if image_resized.ndim == 3:
         padding = ((pad_top, pad_bottom), (pad_left, pad_right), (0, 0))
     else:
@@ -88,44 +102,143 @@ def resize_with_padding(image, target_width = 3088, target_height = 2076):
 
 
 def egg_image_data_import(image_paths):
+    """
+    Imports images from a list of file paths and returns both the loaded images and 
+    a DataFrame containing metadata for each image.
+
+    The expected directory structure is:
+        root/
+            device_1/
+                species_a/
+                    image1.jpg
+                    image2.jpg
+                species_b/
+            device_2/
+                species_c/
+            ...
+
+    Each image must reside in a species subfolder inside a device folder.
+
+    Args:
+        image_paths (list of str): List of file paths to the images.
+
+    Returns:
+        list: List of loaded images as NumPy arrays.
+        pandas.DataFrame: DataFrame with columns: 
+                          - 'image_path': full image path,
+                          - 'device': device folder name,
+                          - 'species': species folder name.
+    """
     data = []
     images = []
     for path in image_paths:
-        image = skimage.io.imread(path)
-        
-        path = path
+        try:
+            image = io.imread(path)
+            if image.ndim < 2:
+                print(f"Skipping non-image file (too few dimensions): {path}")
+                continue
+        except Exception as e:
+            print(f"Skipping invalid image file: {path} ({e})")
+            continue
+
         species = os.path.basename(os.path.dirname(path))
-        category = os.path.basename(os.path.dirname(os.path.dirname(path)))
+        device = os.path.basename(os.path.dirname(os.path.dirname(path)))
+        name = os.path.basename(path)
         data.append({
-            'path': path,
-            'category': category,
-            'species': species
+            'image_path': path,
+            'device': device,
+            'species': species,
+            'image': image,
+            'name': name
         })
         images.append(image)
 
     df = pd.DataFrame(data)
+    if images == []:
+        return print("No images in image path variable")
     return images, df
 
 
-def egg_image_import(image_paths):
+def batch_image_import(image_paths):
+    """
+    Imports multiple images from a list of file paths.
+
+    Any files that cannot be read as valid images will be skipped.
+
+    Args:
+        image_paths (list of str): List of file paths to image files.
+
+    Returns:
+        list: List of successfully loaded images as NumPy arrays.
+    """
     images = []
     for path in image_paths:
-        image = skimage.io.imread(path)
-        images.append(image)
+        try:
+            image = io.imread(path)
+            if image.ndim < 2:
+                print(f"Skipping non-image file (too few dimensions): {path}")
+                continue
+            else:
+                images.append(image)
+        except Exception as e:
+            print(f"Skipping invalid image file: {path} ({e})")
+            continue
+    if images == []:
+        return print("No images in image path variable")
     return images
 
-def region_sepperation(segment_mask):
+
+def region_separation(segment_mask):
+    """
+    Refines a segmentation mask and extracts distinct labeled regions.
+
+    The function performs the following steps:
+        - Removes small holes in regions labeled as 2
+        - Applies morphological erosion to eliminate small connections or noise
+        - Removes small objects below a size threshold
+        - Applies dilation to restore approximate original shapes
+        - Labels connected regions
+
+    Args:
+        segment_mask (ndarray): The input segmentation mask (e.g. with label 2 indicating the foreground).
+
+    Returns:
+        tuple:
+            regions (skimage.measure._regionprops.RegionProperties): 
+                List of region properties for each labeled region.
+            labeled_overlay (ndarray): Labeled image where each region has a unique integer ID.
+    """
     mask_cleaned = remove_small_holes(segment_mask == 2, area_threshold=5000)
+    mask_cleaned = erosion(mask_cleaned, footprint=footprint_rectangle((25, 25)))
+    mask_cleaned = remove_small_objects(mask_cleaned, min_size=20000)
+    mask_cleaned = dilation(mask_cleaned, footprint_rectangle((25, 25)), mode='ignore')
     labeled_overlay = label(mask_cleaned)
-    labeled_overlay = erosion(labeled_overlay, footprint=footprint_rectangle((25, 25)))
-    labeled_overlay = remove_small_objects(labeled_overlay, min_size=20000)
-    labeled_overlay = dilation(labeled_overlay, footprint_rectangle((25, 25)), mode='ignore')
     regions = regionprops(labeled_overlay)
 
     return regions, labeled_overlay
 
 
 def region_processing(image, labeled_overlay, region):
+    """
+    Extracts and processes a single labeled region from an image.
+
+    The function crops the specified region from the original image, creates a mask, 
+    and calculates various shape and sharpness features. It returns the masked region, 
+    the corresponding binary mask, and a dictionary of region properties and features.
+
+    Args:
+        image (ndarray): The original RGB image.
+        labeled_overlay (ndarray): Labeled image where each region has a unique integer ID.
+        region (skimage.measure._regionprops.RegionProperties): Region to process.
+
+    Returns:
+        tuple:
+            masked_image (ndarray): The RGB image of the extracted region, masked with the region shape.
+            mask (ndarray): Binary mask of the region within the bounding box.
+            data (dict): Dictionary of region properties and computed features including:
+                         - angle, area, perimeter, roundness, axis lengths,
+                           length/width ratio, sharpness measures, and image/mask.
+    """
     
     # cutting out the specified region out of an image
     minr, minc, maxr, maxc = region.bbox
@@ -156,138 +269,121 @@ def region_processing(image, labeled_overlay, region):
         'width': width,
         'len_wid_ratio': ratio,
         'laplacian' : laplacian,
-        'edge': edge
+        'edge': edge,
+        'segment': masked_image,
+        'mask': mask
     }
 
     return masked_image, mask, data
-
-
-def save_image(save_path, image, name):
-    skimage.io.imsave(f"{save_path}/{name}.png", img_as_ubyte(image))
 
 
 def make_key(row):
     return f"image_{row['image_index']}_segment_{row['region_index']}.png"
 
 
-def egg_segmentation(image_paths, seg_model, height, width, save_path=None):
-    """Segmenting pictures of eggs for multiple pictures in given path.
-    Usable for setting up a workflow and training models as well as in prduction.
-    Returning a dataframe of segment data and the corresponding images, segments and masks.
-    
+def show_images(image_df):
+    """
+    Displays the first 25 images from a DataFrame in a 5x5 grid.
+
+    Assumes that:
+        - The DataFrame contains a 'segment' column with image arrays.
+        - The DataFrame contains 'image_index' and 'region_index' columns 
+          used for titling the subplots.
+
     Args:
-        image_paths (path): The path to the images.
-        seq_model (object): The loaded model to segment the images.
-        height (int): Specifying a certain image height.
-        width (int): Specifying a certain image width.
-        save_path (path): The path were segmented images are saved to. If not given images are not saved.
+        image_df (pandas.DataFrame): DataFrame containing image data 
+                                     and metadata for display.
 
     Returns:
-        df (pandas.dataframe): dataframe containg segment parameters important for classification.
-        images (list): A list of the original images.
-        segment_mask (list): A list of segmentation masks for original images.
-        segments (list): A list of segmented images
-        masks (list): A list of the segmented masks
+        None
     """
-    images = []
-    segment_masks = []
-    segments = []
-    masks = []
-    data = []
+    fig, axes = plt.subplots(5,5,figsize=(20,12))
+    ax = axes.flatten()
+    for i in range(25):
+        ax[i].set_title(f"image_{image_df.loc[i, "image_index"]}_segment_{image_df.loc[i, "region_index"]}")
+        ax[i].imshow(image_df.loc[i, "segment"])
+        ax[i].axis("off")
+    plt.tight_layout()
+
+
+def rotate_and_pad_rgb_segment(row, output_shape=(200, 100)):
+    """
+    Rotates an RGB image based on the given angle, crops the object using the rotated mask,
+    resizes it while preserving aspect ratio, and pads it to the desired output shape.
+
+    The image, mask, and angle are expected to be contained in the given DataFrame row
+    under the keys 'segment', 'mask', and 'angle'.
+
+    Args:
+        row (pandas.Series): A row from a DataFrame containing:
+            - 'segment' (ndarray): RGB image of shape (H, W, 3)
+            - 'mask' (ndarray): Binary mask of the segmented object
+            - 'angle' (float): Rotation angle in radians (counter-clockwise)
+        output_shape (tuple of int): Desired output image shape (height, width)
+
+    Returns:
+        ndarray: Rotated, resized, and padded RGB image of shape `output_shape` + (3,)
+    """
+    image = row["segment"]
+    mask = row["mask"]
+    angle = row["angle"]
+
+    if image.ndim != 3 or image.shape[2] != 3:
+        return image
+
+    if not np.isfinite(angle):
+        return image
+
+    angle_deg = -np.degrees(angle)
+    rotated_img = rotate(image, angle_deg, resize=True, preserve_range=True)
+    rotated_mask = rotate(mask.astype(float), angle_deg, resize=True) > 0.5
+
+    coords = np.argwhere(rotated_mask)
+    if coords.size == 0:
+        return np.zeros((*output_shape, 3), dtype=np.uint8)
+
+    y0, x0 = coords.min(axis=0)
+    y1, x1 = coords.max(axis=0) + 1
+    cropped = rotated_img[y0:y1, x0:x1, :]
+
+    obj_h, obj_w = cropped.shape[:2]
+    target_h, target_w = output_shape
+    scale = min(target_h / obj_h, target_w / obj_w)
+    new_h = int(obj_h * scale)
+    new_w = int(obj_w * scale)
+
+    resized = resize(cropped, (new_h, new_w, 3), preserve_range=True, anti_aliasing=True)
+
+    padded = np.zeros((target_h, target_w, 3), dtype=resized.dtype)
+    start_y = (target_h - new_h) // 2
+    start_x = (target_w - new_w) // 2
+    padded[start_y:start_y+new_h, start_x:start_x+new_w, :] = resized
+
+    padded = np.clip(padded, 0, 255)
+    padded = padded.astype(np.uint8)
+
+    return padded
+
+
+def prepare_dataset(X, y, batch_size=32, shuffle=True):
+    """
+    Erstellt ein tf.data.Dataset aus Bildern und Labels und bereitet es korrekt für EfficientNetV2B0 vor.
     
-    for i, path in enumerate(image_paths):
-        image = skimage.io.imread(path)
-        
-        path = path
-        species = os.path.basename(os.path.dirname(path))
-        category = os.path.basename(os.path.dirname(os.path.dirname(path)))
+    - X: numpy array oder list of arrays, shape (num_samples, 200, 100, 3)
+    - y: list oder array von int64-Labels
+    - batch_size: Größe pro Batch
+    - shuffle: True/False – ob das Dataset geshuffelt wird
+    """
 
-        # adjust the image to specified size. ratio is kept missing pixels are padded
-        if image.shape[:2] != (height, width):
-            image, content_mask = ecf.resize_with_padding(image, width, height)
-        else:
-            content_mask = np.ones((height, width), dtype=bool)
+    def preprocess(img, label):
+        img = tf.cast(img, tf.float32)
+        img = preprocess_input(img)
+        label = tf.cast(label, tf.int32)
+        return img, label
 
-        # calling segmentation function to get a segmentation mask
-        segment_mask = ecf.segmentation(image, seg_model)
-        if image.shape[:2] != (height, width):
-            segment_mask[~content_mask] = 1
-
-        # improving segmentation mask with various skimage methods
-        mask_cleaned = remove_small_holes(segment_mask == 2, area_threshold=5000)
-        labeled_overlay = label(mask_cleaned)
-        labeled_overlay = erosion(labeled_overlay, footprint=footprint_rectangle((25, 25)))
-        labeled_overlay = remove_small_objects(labeled_overlay, min_size=20000)
-        labeled_overlay = dilation(labeled_overlay, footprint_rectangle((25, 25)), mode='ignore')
-        regions = regionprops(labeled_overlay)
-        
-        images.append(image)
-        segment_masks.append(labeled_overlay)
-
-        # divide picture into segmented areas
-        for j, region in enumerate(regions):
-            minr, minc, maxr, maxc = region.bbox
-            cropped_image = image[minr:maxr, minc:maxc]
-            mask = labeled_overlay[minr:maxr, minc:maxc] == region.label
-            masked_image = np.zeros_like(cropped_image)
-            for c in range(cropped_image.shape[2]):
-                masked_image[..., c] = cropped_image[..., c] * mask
-            image_gray = skimage.color.rgb2gray(masked_image)
-            
-            # saving image and corresponding mask for each segment
-            segments.append(masked_image)
-            masks.append(mask)
-
-            if save_path != None:
-                skimage.io.imsave(f"{save_path}/segment_images/{category[0]}_image_{i}_segment_{j}.png", img_as_ubyte(masked_image))
-                skimage.io.imsave(f"{save_path}/segment_masks/{category[0]}_mask_{i}_segment_{j}.png", img_as_ubyte(mask))
-
-            # get measure parameters for each segment and saving them to a specified list
-            angle = region.orientation
-            area = region.area
-            perimeter = region.perimeter
-            roundness = 4 * np.pi * area / (perimeter ** 2) if perimeter != 0 else 0
-            length = region.axis_major_length
-            width = region.axis_minor_length
-            ratio = length / width
-            laplacian = ecf.measure_sharpness(image_gray)
-            edge = ecf.gradient_sharpness(image_gray)
-            
-            if save_path != None:
-                data.append({
-                    'path': path,
-                    'device': category,
-                    'species': species,
-                    'image': i,
-                    'segment': j,
-                    'angle': angle,
-                    'area': area,
-                    'perimeter': perimeter,
-                    'roundness': roundness,
-                    'length': length,
-                    'width': width,
-                    'len_wid_ratio': ratio,
-                    'laplacian' : laplacian,
-                    'edge': edge
-                })
-            else:
-                data.append({
-                    'path': path,
-                    'image': i,
-                    'segment': j,
-                    'angle': angle,
-                    'area': area,
-                    'perimeter': perimeter,
-                    'roundness': roundness,
-                    'length': length,
-                    'width': width,
-                    'len_wid_ratio': ratio,
-                    'laplacian' : laplacian,
-                    'edge': edge
-                })
-
-    df = pd.DataFrame(data)
-    if save_path != None:
-        df.to_csv(f"{save_path}/segmentation_data.csv")
-
-    return df, images, segment_masks, segments, masks
+    ds = tf.data.Dataset.from_tensor_slices((X, y))
+    if shuffle:
+        ds = ds.shuffle(buffer_size=len(X))
+    ds = ds.map(preprocess, num_parallel_calls=tf.data.AUTOTUNE)
+    ds = ds.batch(batch_size).prefetch(tf.data.AUTOTUNE)
+    return ds
