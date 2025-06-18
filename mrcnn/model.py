@@ -1651,7 +1651,7 @@ def generate_random_rois(image_shape, count, gt_class_ids, gt_boxes):
     return rois
 
 
-class DataGenerator(KU.Sequence):
+class DataGenerator:
     """An iterable that returns images and corresponding target class ids,
         bounding box deltas, and masks. It inherits from keras.utils.Sequence to avoid data redundancy
         when multiprocessing=True.
@@ -1712,6 +1712,19 @@ class DataGenerator(KU.Sequence):
 
     def __len__(self):
         return int(np.ceil(len(self.image_ids) / float(self.batch_size)))
+
+    def __iter__(self):
+        self.current_index = 0
+        if self.shuffle:
+            np.random.shuffle(self.image_ids)
+        return self
+
+    def __next__(self):
+        if self.current_index >= len(self):
+            raise StopIteration
+        data = self[self.current_index]
+        self.current_index += 1
+        return data
 
     def __getitem__(self, idx):
         b = 0
@@ -1816,8 +1829,81 @@ class DataGenerator(KU.Sequence):
                     batch_mrcnn_class_ids, -1)
                 outputs.extend(
                     [batch_mrcnn_class_ids, batch_mrcnn_bbox, batch_mrcnn_mask])
-
+        outputs = {
+            "rpn_class_loss": np.zeros((self.batch_size,), dtype=np.float32),
+            "rpn_bbox_loss": np.zeros((self.batch_size, 4), dtype=np.float32),
+            "mrcnn_class_loss": np.zeros((self.batch_size,), dtype=np.float32),
+            "mrcnn_bbox_loss": np.zeros((self.batch_size, 4), dtype=np.float32),
+            "mrcnn_mask_loss": np.zeros((self.batch_size,), dtype=np.float32),
+        }
+        # return inputs, outputs
         return inputs, outputs
+
+def data_generator(dataset, config, shuffle=True, augmentation=None,
+                   random_rois=0, detection_targets=False):
+    """Python-Generator, der Trainingsdaten f�r Mask R-CNN erzeugt."""
+
+    image_ids = np.copy(dataset.image_ids)
+
+    # Anchors vorbereiten
+    backbone_shapes = compute_backbone_shapes(config, config.IMAGE_SHAPE)
+    anchors = utils.generate_pyramid_anchors(config.RPN_ANCHOR_SCALES,
+                                              config.RPN_ANCHOR_RATIOS,
+                                              backbone_shapes,
+                                              config.BACKBONE_STRIDES,
+                                              config.RPN_ANCHOR_STRIDE)
+
+    while True:  # endloser Generator
+        if shuffle:
+            np.random.shuffle(image_ids)
+
+        b = 0
+        for image_id in image_ids:
+            image, image_meta, gt_class_ids, gt_boxes, gt_masks = \
+                load_image_gt(dataset, config, image_id, augmentation=augmentation)
+
+            if not np.any(gt_class_ids > 0):
+                continue
+
+            rpn_match, rpn_bbox = build_rpn_targets(image.shape, anchors,
+                                                    gt_class_ids, gt_boxes, config)
+
+            if random_rois:
+                rpn_rois = generate_random_rois(image.shape, random_rois, gt_class_ids, gt_boxes)
+                if detection_targets:
+                    rois, mrcnn_class_ids, mrcnn_bbox, mrcnn_mask = \
+                        build_detection_targets(rpn_rois, gt_class_ids, gt_boxes, gt_masks, config)
+
+            if gt_boxes.shape[0] > config.MAX_GT_INSTANCES:
+                ids = np.random.choice(np.arange(gt_boxes.shape[0]), config.MAX_GT_INSTANCES, replace=False)
+                gt_class_ids = gt_class_ids[ids]
+                gt_boxes = gt_boxes[ids]
+                gt_masks = gt_masks[:, :, ids]
+
+            molded_image = mold_image(image.astype(np.float32), config)
+
+            # Inputs (immer gleich)
+            inputs = [
+                np.expand_dims(molded_image, 0),
+                np.expand_dims(image_meta, 0),
+                np.expand_dims(rpn_match[:, np.newaxis], 0),
+                np.expand_dims(rpn_bbox, 0),
+                np.expand_dims(np.pad(gt_class_ids, (0, config.MAX_GT_INSTANCES - gt_class_ids.shape[0])), 0),
+                np.expand_dims(np.pad(gt_boxes, ((0, config.MAX_GT_INSTANCES - gt_boxes.shape[0]), (0, 0))), 0),
+                np.expand_dims(np.pad(gt_masks,
+                    ((0, 0), (0, 0), (0, config.MAX_GT_INSTANCES - gt_masks.shape[-1]))), 0),
+            ]
+
+            # Outputs (Dummy-Ziele)
+            outputs = {
+                "rpn_class_loss": np.zeros((1,), dtype=np.float32),
+                "rpn_bbox_loss": np.zeros((1, 4), dtype=np.float32),
+                "mrcnn_class_loss": np.zeros((1,), dtype=np.float32),
+                "mrcnn_bbox_loss": np.zeros((1, 4), dtype=np.float32),
+                "mrcnn_mask_loss": np.zeros((1,), dtype=np.float32),
+            }
+
+            yield tuple(inputs), outputs
 
 
 ############################################################
@@ -2254,14 +2340,14 @@ class MaskRCNN(object):
             )
 
         # Optional: Metriken f�r jeden Loss loggen
-        for name in loss_names:
-            loss_layer = self.keras_model.get_layer(name)
-            weight = self.config.LOSS_WEIGHTS.get(name, 1.0)
-            self.keras_model.add_metric(
-                tf.reduce_mean(loss_layer.output) * weight,
-                name=name,
-                aggregation="mean"
-            )
+        # for name in loss_names:
+        #    loss_layer = self.keras_model.get_layer(name)
+        #    weight = self.config.LOSS_WEIGHTS.get(name, 1.0)
+        #    metric_layer = keras.layers.Lambda(
+        #        lambda x: tf.reduce_mean(x) * weight,
+        #        name=f"{name}_metric"
+        #    )(loss_layer.output)
+            # self.keras_model.add_metric(metric_layer, name=name, aggregation="mean")
 
     def set_trainable(self, layer_regex, keras_model=None, indent=0, verbose=1):
         """Sets model layers as trainable if their names match
@@ -2389,10 +2475,55 @@ class MaskRCNN(object):
         if layers in layer_regex.keys():
             layers = layer_regex[layers]
 
+        # self.config.STEPS_PER_EPOCH = len(train_dataset.image_ids) // self.config.BATCH_SIZE
+        # self.config.VALIDATION_STEPS = max(1, len(val_dataset.image_ids) // self.config.BATCH_SIZE)
+
         # Data generators
         train_generator = DataGenerator(train_dataset, self.config, shuffle=True,
                                          augmentation=augmentation)
         val_generator = DataGenerator(val_dataset, self.config, shuffle=True)
+
+        def generator_wrapper(generator):
+            for i in range(len(generator)):
+                yield generator[i]
+        
+        def to_int(x):
+            return int(x) if not isinstance(x, int) else x
+
+        B = to_int(self.config.BATCH_SIZE)
+        H = to_int(self.config.IMAGE_SHAPE[0])
+        W = to_int(self.config.IMAGE_SHAPE[1])
+        R = to_int(self.config.RPN_TRAIN_ANCHORS_PER_IMAGE)
+        M = to_int(self.config.MAX_GT_INSTANCES)
+
+        output_signature = (
+            (
+                tf.TensorSpec(shape=(B, H, W, 3), dtype=tf.float32),         # images
+                tf.TensorSpec(shape=(B, None), dtype=tf.float32),            # image_meta
+                tf.TensorSpec(shape=(B, None, 1), dtype=tf.int32),           # rpn_match
+                tf.TensorSpec(shape=(B, R, 4), dtype=tf.float32),            # rpn_bbox
+                tf.TensorSpec(shape=(B, M), dtype=tf.int32),                 # gt_class_ids
+                tf.TensorSpec(shape=(B, M, 4), dtype=tf.int32),              # gt_boxes
+                tf.TensorSpec(shape=(B, H, W, M), dtype=tf.bool),            # gt_masks
+            ),
+            {
+                name: tf.TensorSpec(
+                    shape=(B, 4) if "bbox" in name else (B,),
+                    dtype=tf.float32
+                )
+                for name in ["rpn_class_loss", "rpn_bbox_loss", "mrcnn_class_loss", "mrcnn_bbox_loss", "mrcnn_mask_loss"]
+            }
+        )
+
+        train_dataset = tf.data.Dataset.from_generator(
+            lambda: data_generator(train_dataset, self.config, shuffle=True, augmentation=augmentation),
+            output_signature=output_signature
+        )
+
+        val_dataset = tf.data.Dataset.from_generator(
+            lambda: data_generator(val_dataset, self.config, shuffle=False),
+            output_signature=output_signature
+        )
 
         # Create log_dir if it does not exist
         if not os.path.exists(self.log_dir):
@@ -2410,6 +2541,32 @@ class MaskRCNN(object):
         if custom_callbacks:
             callbacks += custom_callbacks
 
+        # tf.config.run_functions_eagerly(True)
+        print(tf.executing_eagerly())
+        print(">>> Typ train_dataset:", type(train_dataset))
+        print(">>> Typ val_dataset:", type(val_dataset))
+
+        print(">>> steps_per_epoch:", self.config.STEPS_PER_EPOCH, type(self.config.STEPS_PER_EPOCH))
+        print(">>> validation_steps:", self.config.VALIDATION_STEPS, type(self.config.VALIDATION_STEPS))
+
+        @tf.function
+        def run_one_step(ds):
+            for x in ds.take(1):
+                tf.print("Batch Inhalt:", x)
+
+        run_one_step(train_dataset)
+
+        train_iter = iter(train_dataset)
+        first_batch = next(train_iter)
+        print("Inputs:")
+        for x in first_batch[0]:
+            print(type(x), getattr(x, 'shape', None))
+        print("Outputs:")
+        for k, v in first_batch[1].items():
+            print(f"{k}: {type(v)}, shape={getattr(v, 'shape', None)}")
+
+
+
         # Train
         log("\nStarting at epoch {}. LR={}\n".format(self.epoch, learning_rate))
         log("Checkpoint Path: {}".format(self.checkpoint_path))
@@ -2425,16 +2582,13 @@ class MaskRCNN(object):
             workers = multiprocessing.cpu_count()
 
         self.keras_model.fit(
-            train_generator,
+            train_dataset,
             initial_epoch=self.epoch,
             epochs=epochs,
-            steps_per_epoch=self.config.STEPS_PER_EPOCH,
+            steps_per_epoch=int(self.config.STEPS_PER_EPOCH),
             callbacks=callbacks,
-            validation_data=val_generator,
-            validation_steps=self.config.VALIDATION_STEPS,
-            max_queue_size=100,
-            workers=0,
-            use_multiprocessing=False,
+            validation_data=val_dataset,
+            validation_steps=int(self.config.VALIDATION_STEPS),
         )
         self.epoch = max(self.epoch, epochs)
 
