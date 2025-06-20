@@ -78,7 +78,7 @@ class EggConfig(Config):
 
     USE_MINI_MASK = False
 
-    RUN_EAGERLY = True
+    RUN_EAGERLY = False
 
 
 ############################################################
@@ -251,15 +251,16 @@ class EggDataset(utils.Dataset):
         if mask.shape[-1] == 0:
             return np.empty([0, 0, 0]), np.empty([0], np.int32)
         
-        return mask.astype(np.bool), class_ids
+        return mask.astype(bool), class_ids
 
     def image_reference(self, image_id):
         """Return the path of the image."""
         info = self.image_info[image_id]
-        if info["source"] == "balloon":
-            return info["path"]
-        else:
-            super(self.__class__, self).image_reference(image_id)
+        # if info["source"] == "balloon":
+        #     return info["path"]
+        # else:
+        #     super(self.__class__, self).image_reference(image_id)
+        return super().image_reference(image_id)
 
 
 def train(model):

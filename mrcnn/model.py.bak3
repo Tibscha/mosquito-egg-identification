@@ -1651,7 +1651,7 @@ def generate_random_rois(image_shape, count, gt_class_ids, gt_boxes):
     return rois
 
 
-class DataGenerator(KU.Sequence):
+class DataGenerator:
     """An iterable that returns images and corresponding target class ids,
         bounding box deltas, and masks. It inherits from keras.utils.Sequence to avoid data redundancy
         when multiprocessing=True.
@@ -1712,6 +1712,19 @@ class DataGenerator(KU.Sequence):
 
     def __len__(self):
         return int(np.ceil(len(self.image_ids) / float(self.batch_size)))
+
+    def __iter__(self):
+        self.current_index = 0
+        if self.shuffle:
+            np.random.shuffle(self.image_ids)
+        return self
+
+    def __next__(self):
+        if self.current_index >= len(self):
+            raise StopIteration
+        data = self[self.current_index]
+        self.current_index += 1
+        return data
 
     def __getitem__(self, idx):
         b = 0
@@ -1803,9 +1816,9 @@ class DataGenerator(KU.Sequence):
                     batch_mrcnn_mask[b] = mrcnn_mask
             b += 1
 
-        inputs = (batch_images, batch_image_meta, batch_rpn_match, batch_rpn_bbox,
-                  batch_gt_class_ids, batch_gt_boxes, batch_gt_masks)
-        outputs = ()
+        inputs = [batch_images, batch_image_meta, batch_rpn_match, batch_rpn_bbox,
+                  batch_gt_class_ids, batch_gt_boxes, batch_gt_masks]
+        outputs = []
 
         if self.random_rois:
             inputs.extend([batch_rpn_rois])
@@ -1816,104 +1829,82 @@ class DataGenerator(KU.Sequence):
                     batch_mrcnn_class_ids, -1)
                 outputs.extend(
                     [batch_mrcnn_class_ids, batch_mrcnn_bbox, batch_mrcnn_mask])
+        outputs = {
+            "rpn_class_loss": np.zeros((self.batch_size,), dtype=np.float32),
+            "rpn_bbox_loss": np.zeros((self.batch_size, 4), dtype=np.float32),
+            "mrcnn_class_loss": np.zeros((self.batch_size,), dtype=np.float32),
+            "mrcnn_bbox_loss": np.zeros((self.batch_size, 4), dtype=np.float32),
+            "mrcnn_mask_loss": np.zeros((self.batch_size,), dtype=np.float32),
+        }
+        # return inputs, outputs
+        return inputs, outputs
 
-        return (inputs, outputs)
+def data_generator(dataset, config, shuffle=True, augmentation=None,
+                   random_rois=0, detection_targets=False):
+    """Python-Generator, der Trainingsdaten f�r Mask R-CNN erzeugt."""
 
-def prepare_sample(dataset, config, image_id):
-    # Bild laden
-    image = dataset.load_image(image_id)  # shape (H, W, 3)
-    mask, class_ids = dataset.load_mask(image_id)  # mask shape (H, W, N), class_ids shape (N,)
+    image_ids = np.copy(dataset.image_ids)
 
-    # Bild und Masken an Netzgröße anpassen (resize + normalize etc.)
-    # Hier als Beispiel einfach auf config.IMAGE_SHAPE skalieren
-    from skimage.transform import resize
+    # Anchors vorbereiten
+    backbone_shapes = compute_backbone_shapes(config, config.IMAGE_SHAPE)
+    anchors = utils.generate_pyramid_anchors(config.RPN_ANCHOR_SCALES,
+                                              config.RPN_ANCHOR_RATIOS,
+                                              backbone_shapes,
+                                              config.BACKBONE_STRIDES,
+                                              config.RPN_ANCHOR_STRIDE)
 
-    image_resized = resize(image, config.IMAGE_SHAPE, preserve_range=True).astype(np.float32)
-    mask_resized = np.zeros((config.IMAGE_SHAPE[0], config.IMAGE_SHAPE[1], mask.shape[-1]), dtype=bool)
-    for i in range(mask.shape[-1]):
-        mask_resized[:, :, i] = resize(mask[:, :, i], config.IMAGE_SHAPE[:2], order=0, preserve_range=True).astype(bool)
-    
-    # Ground truth Bounding Boxes aus Maske berechnen: [y1, x1, y2, x2]
-    gt_boxes = []
-    for i in range(mask_resized.shape[-1]):
-        pos = np.where(mask_resized[:, :, i])
-        if pos[0].size:
-            y1, x1 = np.min(pos[0]), np.min(pos[1])
-            y2, x2 = np.max(pos[0]), np.max(pos[1])
-            gt_boxes.append([y1, x1, y2, x2])
-    gt_boxes = np.array(gt_boxes, dtype=np.float32)
+    while True:  # endloser Generator
+        if shuffle:
+            np.random.shuffle(image_ids)
 
-    # Konvertiere Klassen-IDs und Bounding-Boxes passend zu TensorFlow (z.B. float32, int32)
-    gt_class_ids = class_ids.astype(np.int32)
+        b = 0
+        for image_id in image_ids:
+            image, image_meta, gt_class_ids, gt_boxes, gt_masks = \
+                load_image_gt(dataset, config, image_id, augmentation=augmentation)
 
-    # Dummy Werte für RPN Match, RPN BBox (musst du anpassen, wenn RPN selbst trainiert wird)
-    input_rpn_match = np.zeros((config.RPN_TRAIN_ANCHORS_PER_IMAGE,), dtype=np.int32)
-    input_rpn_bbox = np.zeros((config.RPN_TRAIN_ANCHORS_PER_IMAGE, 4), dtype=np.float32)
+            if not np.any(gt_class_ids > 0):
+                continue
 
-    # Input Metadaten für das Bild (Größe, Skalierung etc.)
-    image_meta = utils.compose_image_meta(
-        image_id=image_id,
-        original_image_shape=image.shape,
-        image_shape=config.IMAGE_SHAPE,
-        window=[0, 0, config.IMAGE_SHAPE[0], config.IMAGE_SHAPE[1]],
-        scale=1.0,
-        active_class_ids=np.ones([config.NUM_CLASSES], dtype=np.int32)
-    )
+            rpn_match, rpn_bbox = build_rpn_targets(image.shape, anchors,
+                                                    gt_class_ids, gt_boxes, config)
 
-    # Packe Input-Tensoren in Tupel
-    inputs = (
-        image_resized,
-        image_meta,
-        input_rpn_match,
-        input_rpn_bbox,
-        gt_class_ids,
-        gt_boxes,
-        mask_resized
-    )
-    # ggf. noch ROIs hinzufügen falls benötigt
+            if random_rois:
+                rpn_rois = generate_random_rois(image.shape, random_rois, gt_class_ids, gt_boxes)
+                if detection_targets:
+                    rois, mrcnn_class_ids, mrcnn_bbox, mrcnn_mask = \
+                        build_detection_targets(rpn_rois, gt_class_ids, gt_boxes, gt_masks, config)
 
-    # Outputs für Losses (Dummy-Arrays mit 0 oder passenden Shapes)
-    # Shapes müssen stimmen, aber Werte können 0 sein, da Loss intern berechnet wird
-    batch_size = config.BATCH_SIZE
-    rpn_class_logits = np.zeros((batch_size, config.RPN_TRAIN_ANCHORS_PER_IMAGE, 2), dtype=np.float32)
-    rpn_class = np.zeros((batch_size, config.RPN_TRAIN_ANCHORS_PER_IMAGE, 2), dtype=np.float32)
-    rpn_bbox = np.zeros((batch_size, config.RPN_TRAIN_ANCHORS_PER_IMAGE, 4), dtype=np.float32)
-    mrcnn_class_logits = np.zeros((batch_size, config.DETECTION_MAX_INSTANCES, config.NUM_CLASSES), dtype=np.float32)
-    mrcnn_class = np.zeros((batch_size, config.DETECTION_MAX_INSTANCES, config.NUM_CLASSES), dtype=np.float32)
-    mrcnn_bbox = np.zeros((batch_size, config.DETECTION_MAX_INSTANCES, 4), dtype=np.float32)
-    mrcnn_mask = np.zeros((batch_size, config.DETECTION_MAX_INSTANCES, config.MASK_SHAPE[0], config.MASK_SHAPE[1]), dtype=np.float32)
-    ROI = np.zeros((batch_size, config.DETECTION_MAX_INSTANCES, 4), dtype=np.float32)
-    output_rois = np.zeros((batch_size, config.DETECTION_MAX_INSTANCES, 4), dtype=np.float32)
+            if gt_boxes.shape[0] > config.MAX_GT_INSTANCES:
+                ids = np.random.choice(np.arange(gt_boxes.shape[0]), config.MAX_GT_INSTANCES, replace=False)
+                gt_class_ids = gt_class_ids[ids]
+                gt_boxes = gt_boxes[ids]
+                gt_masks = gt_masks[:, :, ids]
 
-    # Losses
-    rpn_class_loss = np.array(0, dtype=np.float32)
-    rpn_bbox_loss = np.array(0, dtype=np.float32)
-    mrcnn_class_loss = np.array(0, dtype=np.float32)
-    mrcnn_bbox_loss = np.array(0, dtype=np.float32)
-    mrcnn_mask_loss = np.array(0, dtype=np.float32)
+            molded_image = mold_image(image.astype(np.float32), config)
 
-    rpn_class_loss_output = np.array(0, dtype=np.float32)
-    rpn_bbox_loss_output = np.array(0, dtype=np.float32)
-    mrcnn_class_loss_output = np.array(0, dtype=np.float32)
-    mrcnn_bbox_loss_output = np.array(0, dtype=np.float32)
-    mrcnn_mask_loss_output = np.array(0, dtype=np.float32)
-    reg_loss = np.array(0, dtype=np.float32)
+            # Inputs (immer gleich)
+            inputs = [
+                np.expand_dims(molded_image, 0),
+                np.expand_dims(image_meta, 0),
+                np.expand_dims(rpn_match[:, np.newaxis], 0),
+                np.expand_dims(rpn_bbox, 0),
+                np.expand_dims(np.pad(gt_class_ids, (0, config.MAX_GT_INSTANCES - gt_class_ids.shape[0])), 0),
+                np.expand_dims(np.pad(gt_boxes, ((0, config.MAX_GT_INSTANCES - gt_boxes.shape[0]), (0, 0))), 0),
+                np.expand_dims(np.pad(gt_masks,
+                    ((0, 0), (0, 0), (0, config.MAX_GT_INSTANCES - gt_masks.shape[-1]))), 0),
+            ]
 
-    outputs = (
-        rpn_class_logits, rpn_class, rpn_bbox,
-        mrcnn_class_logits, mrcnn_class, mrcnn_bbox, mrcnn_mask,
-        ROI, output_rois,
-        rpn_class_loss, rpn_bbox_loss, mrcnn_class_loss, mrcnn_bbox_loss, mrcnn_mask_loss,
-        rpn_class_loss_output, rpn_bbox_loss_output, mrcnn_class_loss_output, mrcnn_bbox_loss_output, mrcnn_mask_loss_output,
-        reg_loss
-    )
+            # Outputs (Dummy-Ziele)
+            outputs = {
+                "rpn_class_loss": np.zeros((1,), dtype=np.float32),
+                "rpn_bbox_loss": np.zeros((1, 4), dtype=np.float32),
+                "mrcnn_class_loss": np.zeros((1,), dtype=np.float32),
+                "mrcnn_bbox_loss": np.zeros((1, 4), dtype=np.float32),
+                "mrcnn_mask_loss": np.zeros((1,), dtype=np.float32),
+            }
 
-    return inputs, outputs
+            yield tuple(inputs), outputs
 
-def tf_dataset_generator(dataset, config):
-    for image_id in dataset.image_ids:
-        inputs, outputs = prepare_sample(dataset, config, image_id)
-        yield inputs, outputs
 
 ############################################################
 #  MaskRCNN Class
@@ -1974,8 +1965,11 @@ class MaskRCNN(object):
             input_gt_boxes = KL.Input(
                 shape=[None, 4], name="input_gt_boxes", dtype=tf.float32)
             # Normalize coordinates
+            # gt_boxes = KL.Lambda(lambda x: norm_boxes_graph(
+            #     x, K.shape(input_image)[1:3]))(input_gt_boxes)
             gt_boxes = KL.Lambda(lambda x: norm_boxes_graph(
                x, K.shape(input_image)[1:3]), output_shape=(None, 4))(input_gt_boxes)
+
             # 3. GT Masks (zero padded)
             # [batch, height, width, MAX_GT_INSTANCES]
             if config.USE_MINI_MASK:
@@ -2481,59 +2475,55 @@ class MaskRCNN(object):
         if layers in layer_regex.keys():
             layers = layer_regex[layers]
 
+        # self.config.STEPS_PER_EPOCH = len(train_dataset.image_ids) // self.config.BATCH_SIZE
+        # self.config.VALIDATION_STEPS = max(1, len(val_dataset.image_ids) // self.config.BATCH_SIZE)
+
         # Data generators
         train_generator = DataGenerator(train_dataset, self.config, shuffle=True,
                                          augmentation=augmentation)
         val_generator = DataGenerator(val_dataset, self.config, shuffle=True)
 
-        output_types = (
+        def generator_wrapper(generator):
+            for i in range(len(generator)):
+                yield generator[i]
+        
+        def to_int(x):
+            return int(x) if not isinstance(x, int) else x
+
+        B = to_int(self.config.BATCH_SIZE)
+        H = to_int(self.config.IMAGE_SHAPE[0])
+        W = to_int(self.config.IMAGE_SHAPE[1])
+        R = to_int(self.config.RPN_TRAIN_ANCHORS_PER_IMAGE)
+        M = to_int(self.config.MAX_GT_INSTANCES)
+
+        output_signature = (
             (
-            tf.float32,  # input_image
-            tf.float32,  # input_image_meta
-            tf.int32,    # input_rpn_match
-            tf.float32,  # input_rpn_bbox
-            tf.int32,    # input_gt_class_ids
-            tf.float32,  # input_gt_boxes
-            tf.bool      # input_gt_masks
-            # ggf. input_rois
+                tf.TensorSpec(shape=(B, H, W, 3), dtype=tf.float32),         # images
+                tf.TensorSpec(shape=(B, None), dtype=tf.float32),            # image_meta
+                tf.TensorSpec(shape=(B, None, 1), dtype=tf.int32),           # rpn_match
+                tf.TensorSpec(shape=(B, R, 4), dtype=tf.float32),            # rpn_bbox
+                tf.TensorSpec(shape=(B, M), dtype=tf.int32),                 # gt_class_ids
+                tf.TensorSpec(shape=(B, M, 4), dtype=tf.int32),              # gt_boxes
+                tf.TensorSpec(shape=(B, H, W, M), dtype=tf.bool),            # gt_masks
             ),
-            (
-            tf.float32,  # rpn_class_logits
-            tf.float32,  # rpn_class
-            tf.float32,  # rpn_bbox
-            tf.float32,  # mrcnn_class_logits
-            tf.float32,  # mrcnn_class
-            tf.float32,  # mrcnn_bbox
-            tf.float32,  # mrcnn_mask
-            tf.float32,  # ROI
-            tf.float32,  # output_rois
-            tf.float32,  # rpn_class_loss
-            tf.float32,  # rpn_bbox_loss
-            tf.float32,  # mrcnn_class_loss
-            tf.float32,  # mrcnn_bbox_loss
-            tf.float32,  # mrcnn_mask_loss
-            tf.float32,  # rpn_class_loss_output
-            tf.float32,  # rpn_bbox_loss_output
-            tf.float32,  # mrcnn_class_loss_output
-            tf.float32,  # mrcnn_bbox_loss_output
-            tf.float32,  # mrcnn_mask_loss_output
-            tf.float32,  # reg_loss
-            )
+            {
+                name: tf.TensorSpec(
+                    shape=(B, 4) if "bbox" in name else (B,),
+                    dtype=tf.float32
+                )
+                for name in ["rpn_class_loss", "rpn_bbox_loss", "mrcnn_class_loss", "mrcnn_bbox_loss", "mrcnn_mask_loss"]
+            }
         )
 
-        dataset_train = tf.data.Dataset.from_generator(
-            lambda: tf_dataset_generator(train_dataset, self.config),
-            output_types=output_types
-        ).batch(self.config.BATCH_SIZE)
+        train_dataset = tf.data.Dataset.from_generator(
+            lambda: data_generator(train_dataset, self.config, shuffle=True, augmentation=augmentation),
+            output_signature=output_signature
+        )
 
-        dataset_val = tf.data.Dataset.from_generator(
-            lambda: tf_dataset_generator(val_dataset, self.config),
-            output_types=output_types
-        ).batch(self.config.BATCH_SIZE)
-
-        from keras.utils import Sequence
-        print(isinstance(train_generator, Sequence))  # Muss True sein
-        print(isinstance(train_generator, tf.data.Dataset))
+        val_dataset = tf.data.Dataset.from_generator(
+            lambda: data_generator(val_dataset, self.config, shuffle=False),
+            output_signature=output_signature
+        )
 
         # Create log_dir if it does not exist
         if not os.path.exists(self.log_dir):
@@ -2551,6 +2541,32 @@ class MaskRCNN(object):
         if custom_callbacks:
             callbacks += custom_callbacks
 
+        # tf.config.run_functions_eagerly(True)
+        print(tf.executing_eagerly())
+        print(">>> Typ train_dataset:", type(train_dataset))
+        print(">>> Typ val_dataset:", type(val_dataset))
+
+        print(">>> steps_per_epoch:", self.config.STEPS_PER_EPOCH, type(self.config.STEPS_PER_EPOCH))
+        print(">>> validation_steps:", self.config.VALIDATION_STEPS, type(self.config.VALIDATION_STEPS))
+
+        @tf.function
+        def run_one_step(ds):
+            for x in ds.take(1):
+                tf.print("Batch Inhalt:", x)
+
+        run_one_step(train_dataset)
+
+        train_iter = iter(train_dataset)
+        first_batch = next(train_iter)
+        print("Inputs:")
+        for x in first_batch[0]:
+            print(type(x), getattr(x, 'shape', None))
+        print("Outputs:")
+        for k, v in first_batch[1].items():
+            print(f"{k}: {type(v)}, shape={getattr(v, 'shape', None)}")
+
+
+
         # Train
         log("\nStarting at epoch {}. LR={}\n".format(self.epoch, learning_rate))
         log("Checkpoint Path: {}".format(self.checkpoint_path))
@@ -2565,24 +2581,14 @@ class MaskRCNN(object):
         else:
             workers = multiprocessing.cpu_count()
 
-        def wrap_generator(generator):
-            for item in generator:
-                yield item
-
-        train_data = (wrap_generator(train_generator))
-        val_data = (wrap_generator(val_generator))
-
         self.keras_model.fit(
-            train_generator,
+            train_dataset,
             initial_epoch=self.epoch,
             epochs=epochs,
-            steps_per_epoch=self.config.STEPS_PER_EPOCH,
+            steps_per_epoch=int(self.config.STEPS_PER_EPOCH),
             callbacks=callbacks,
-            validation_data=val_generator,
-            validation_steps=self.config.VALIDATION_STEPS,
-            # max_queue_size=100,
-            # workers=1,
-            # use_multiprocessing=False,
+            validation_data=val_dataset,
+            validation_steps=int(self.config.VALIDATION_STEPS),
         )
         self.epoch = max(self.epoch, epochs)
 
