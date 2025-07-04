@@ -1,0 +1,183 @@
+2025-06-23 10:25:20,177 INFO    MainThread:2262 [wandb_init.py:setup_run_log_directory():703] Logging user logs to /home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250623_102520-lh8ti68c/logs/debug.log
+2025-06-23 10:25:20,177 INFO    MainThread:2262 [wandb_init.py:setup_run_log_directory():704] Logging internal logs to /home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250623_102520-lh8ti68c/logs/debug-internal.log
+2025-06-23 10:25:20,177 INFO    MainThread:2262 [wandb_init.py:monkeypatch_ipython():622] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x76ad5caadcd0>
+2025-06-23 10:25:20,177 INFO    MainThread:2262 [wandb_init.py:init():831] calling init triggers
+2025-06-23 10:25:20,177 INFO    MainThread:2262 [wandb_init.py:init():836] wandb.init called with sweep_config: {}
+config: {'architecture': 'EfficientNetV2B0', 'input_shape': (200, 200, 3), 'epochs': 10, 'batch_size': 20, 'optimizer': 'adam', 'loss': 'categorical_crossentropy', 'num_classes': 2, '_wandb': {}}
+2025-06-23 10:25:21,328 INFO    MainThread:2262 [wandb_init.py:init():872] starting backend
+2025-06-23 10:25:21,328 INFO    MainThread:2262 [wandb_init.py:init():875] sending inform_init request
+2025-06-23 10:25:21,328 INFO    MainThread:2262 [wandb_init.py:init():883] backend started and connected
+2025-06-23 10:25:21,329 INFO    MainThread:2262 [wandb_run.py:_label_probe_notebook():1299] probe notebook
+2025-06-23 10:25:21,331 INFO    MainThread:2262 [wandb_init.py:init():956] updated telemetry
+2025-06-23 10:25:21,333 INFO    MainThread:2262 [wandb_init.py:init():980] communicating run to backend with 90.0 second timeout
+2025-06-23 10:25:21,833 INFO    MainThread:2262 [wandb_init.py:init():1032] starting run threads in backend
+2025-06-23 10:25:21,931 INFO    MainThread:2262 [wandb_run.py:_console_start():2453] atexit reg
+2025-06-23 10:25:21,931 INFO    MainThread:2262 [wandb_run.py:_redirect():2301] redirect: wrap_raw
+2025-06-23 10:25:21,931 INFO    MainThread:2262 [wandb_run.py:_redirect():2370] Wrapping output streams.
+2025-06-23 10:25:21,931 INFO    MainThread:2262 [wandb_run.py:_redirect():2393] Redirects installed.
+2025-06-23 10:25:21,932 INFO    MainThread:2262 [wandb_init.py:init():1078] run started, returning control to user process
+2025-06-23 10:25:21,933 INFO    MainThread:2262 [wandb_init.py:_post_run_cell_hook():592] [no run ID] resuming backend
+2025-06-23 10:26:30,144 INFO    MainThread:2262 [jupyter.py:save_ipynb():404] [no run ID] not saving jupyter notebook
+2025-06-23 10:26:30,144 INFO    MainThread:2262 [wandb_init.py:_pre_run_cell_hook():581] [no run ID] pausing backend
+2025-06-23 10:26:30,737 INFO    MainThread:2262 [wandb_init.py:_post_run_cell_hook():592] [no run ID] resuming backend
+2025-06-23 10:26:33,015 INFO    MainThread:2262 [jupyter.py:save_ipynb():404] [no run ID] not saving jupyter notebook
+2025-06-23 10:26:33,016 INFO    MainThread:2262 [wandb_init.py:_pre_run_cell_hook():581] [no run ID] pausing backend
+2025-06-23 10:26:33,040 INFO    MainThread:2262 [wandb_init.py:_post_run_cell_hook():592] [no run ID] resuming backend
+2025-06-23 10:26:41,855 INFO    MainThread:2262 [jupyter.py:save_ipynb():404] [no run ID] not saving jupyter notebook
+2025-06-23 10:26:41,855 INFO    MainThread:2262 [wandb_init.py:_pre_run_cell_hook():581] [no run ID] pausing backend
+2025-06-23 10:26:41,857 INFO    MainThread:2262 [wandb_init.py:_post_run_cell_hook():592] [no run ID] resuming backend
+2025-06-23 10:26:41,901 INFO    MainThread:2262 [jupyter.py:save_ipynb():404] [no run ID] not saving jupyter notebook
+2025-06-23 10:26:41,901 INFO    MainThread:2262 [wandb_init.py:_pre_run_cell_hook():581] [no run ID] pausing backend
+2025-06-23 10:26:41,905 INFO    MainThread:2262 [wandb_init.py:_post_run_cell_hook():592] [no run ID] resuming backend
+2025-06-23 10:26:42,503 INFO    MainThread:2262 [jupyter.py:save_ipynb():404] [no run ID] not saving jupyter notebook
+2025-06-23 10:26:42,503 INFO    MainThread:2262 [wandb_init.py:_pre_run_cell_hook():581] [no run ID] pausing backend
+2025-06-23 10:26:42,505 INFO    MainThread:2262 [wandb_init.py:_post_run_cell_hook():592] [no run ID] resuming backend
+2025-06-23 10:26:42,547 INFO    MainThread:2262 [jupyter.py:save_ipynb():404] [no run ID] not saving jupyter notebook
+2025-06-23 10:26:42,547 INFO    MainThread:2262 [wandb_init.py:_pre_run_cell_hook():581] [no run ID] pausing backend
+2025-06-23 10:26:42,552 INFO    MainThread:2262 [wandb_init.py:_post_run_cell_hook():592] [no run ID] resuming backend
+2025-06-23 10:26:42,651 INFO    MainThread:2262 [jupyter.py:save_ipynb():404] [no run ID] not saving jupyter notebook
+2025-06-23 10:26:42,651 INFO    MainThread:2262 [wandb_init.py:_pre_run_cell_hook():581] [no run ID] pausing backend
+2025-06-23 10:26:42,653 INFO    MainThread:2262 [wandb_init.py:_post_run_cell_hook():592] [no run ID] resuming backend
+2025-06-23 10:26:49,006 INFO    MainThread:2262 [jupyter.py:save_ipynb():404] [no run ID] not saving jupyter notebook
+2025-06-23 10:26:49,006 INFO    MainThread:2262 [wandb_init.py:_pre_run_cell_hook():581] [no run ID] pausing backend
+2025-06-23 10:26:49,009 INFO    MainThread:2262 [wandb_init.py:_post_run_cell_hook():592] [no run ID] resuming backend
+2025-06-23 10:26:51,573 INFO    MainThread:2262 [jupyter.py:save_ipynb():404] [no run ID] not saving jupyter notebook
+2025-06-23 10:26:51,573 INFO    MainThread:2262 [wandb_init.py:_pre_run_cell_hook():581] [no run ID] pausing backend
+2025-06-23 10:26:51,575 INFO    MainThread:2262 [wandb_init.py:_post_run_cell_hook():592] [no run ID] resuming backend
+2025-06-23 10:26:51,626 INFO    MainThread:2262 [jupyter.py:save_ipynb():404] [no run ID] not saving jupyter notebook
+2025-06-23 10:26:51,626 INFO    MainThread:2262 [wandb_init.py:_pre_run_cell_hook():581] [no run ID] pausing backend
+2025-06-23 10:26:51,630 INFO    MainThread:2262 [wandb_init.py:_post_run_cell_hook():592] [no run ID] resuming backend
+2025-06-23 10:26:51,780 INFO    MainThread:2262 [jupyter.py:save_ipynb():404] [no run ID] not saving jupyter notebook
+2025-06-23 10:26:51,780 INFO    MainThread:2262 [wandb_init.py:_pre_run_cell_hook():581] [no run ID] pausing backend
+2025-06-23 10:26:51,782 INFO    MainThread:2262 [wandb_init.py:_post_run_cell_hook():592] [no run ID] resuming backend
+2025-06-23 10:26:58,452 INFO    MainThread:2262 [jupyter.py:save_ipynb():404] [no run ID] not saving jupyter notebook
+2025-06-23 10:26:58,452 INFO    MainThread:2262 [wandb_init.py:_pre_run_cell_hook():581] [no run ID] pausing backend
+2025-06-23 10:26:58,518 INFO    MainThread:2262 [wandb_init.py:_post_run_cell_hook():592] [no run ID] resuming backend
+2025-06-23 10:28:31,282 INFO    MainThread:2262 [jupyter.py:save_ipynb():404] [no run ID] not saving jupyter notebook
+2025-06-23 10:28:31,282 INFO    MainThread:2262 [wandb_init.py:_pre_run_cell_hook():581] [no run ID] pausing backend
+2025-06-23 10:28:31,285 INFO    MainThread:2262 [wandb_run.py:_finish():2219] finishing run tibor-schaffrin-universit-t-hamburg/egg-classification/lh8ti68c
+2025-06-23 10:28:31,286 INFO    MainThread:2262 [jupyter.py:save_ipynb():404] not saving jupyter notebook
+2025-06-23 10:28:31,286 INFO    MainThread:2262 [wandb_init.py:_jupyter_teardown():607] cleaning up jupyter logic
+2025-06-23 10:28:31,286 INFO    MainThread:2262 [wandb_run.py:_atexit_cleanup():2418] got exitcode: 0
+2025-06-23 10:28:31,286 INFO    MainThread:2262 [wandb_run.py:_restore():2400] restore
+2025-06-23 10:28:31,286 INFO    MainThread:2262 [wandb_run.py:_restore():2406] restore done
+2025-06-23 10:29:23,634 WARNING MainThread:2262 [wandb_init.py:init():1613] [no run ID] interrupted
+Traceback (most recent call last):
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/wandb_init.py", line 1609, in init
+    return wi.init(run_settings, run_config, run_printer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/wandb_init.py", line 852, in init
+    self._wl.finish_all_active_runs()
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/wandb_setup.py", line 163, in finish_all_active_runs
+    run.finish()
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/wandb_run.py", line 391, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/wandb_run.py", line 436, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/wandb_run.py", line 2207, in finish
+    return self._finish(exit_code)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/wandb_run.py", line 391, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/wandb_run.py", line 2235, in _finish
+    self._atexit_cleanup(exit_code=exit_code)
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/wandb_run.py", line 2430, in _atexit_cleanup
+    self._on_finish()
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/wandb_run.py", line 2681, in _on_finish
+    wait_with_progress(
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/mailbox/wait_with_progress.py", line 24, in wait_with_progress
+    return wait_all_with_progress(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/mailbox/wait_with_progress.py", line 87, in wait_all_with_progress
+    return asyncio_compat.run(progress_loop_with_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/asyncio_compat.py", line 30, in run
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 451, in result
+    self._condition.wait(timeout)
+  File "/usr/lib/python3.12/threading.py", line 355, in wait
+    waiter.acquire()
+KeyboardInterrupt
+2025-06-23 10:29:23,636 WARNING MsgRouterThr:2262 [router.py:message_loop():63] [no run ID] message_loop has been closed
+Traceback (most recent call last):
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/interface/router_sock.py", line 27, in _read_message
+    return self._sock_client.read_server_response(timeout=1)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/sock_client.py", line 235, in read_server_response
+    data = self._read_packet_bytes(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/sock_client.py", line 220, in _read_packet_bytes
+    raise SockClientClosedError
+wandb.sdk.lib.sock_client.SockClientClosedError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/interface/router.py", line 56, in message_loop
+    msg = self._read_message()
+          ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/interface/router_sock.py", line 29, in _read_message
+    raise MessageRouterClosedError from e
+wandb.sdk.interface.router.MessageRouterClosedError
+2025-06-23 10:29:23,646 INFO    MsgRouterThr:2262 [mailbox.py:close():129] [no run ID] Closing mailbox, abandoning 4 handles.
+2025-06-23 10:29:27,913 ERROR   MainThread:2262 [wandb_init.py:init():1619] [no run ID] error in wandb.init()
+Traceback (most recent call last):
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/wandb_init.py", line 1609, in init
+    return wi.init(run_settings, run_config, run_printer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/wandb_init.py", line 963, in init
+    backend.interface.publish_header()
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/interface/interface.py", line 97, in publish_header
+    self._publish_header(header)
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/interface/interface_shared.py", line 275, in _publish_header
+    self._publish(rec)
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/interface/interface_sock.py", line 39, in _publish
+    self._sock_client.send_record_publish(record)
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/sock_client.py", line 174, in send_record_publish
+    self.send_server_request(server_req)
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/sock_client.py", line 154, in send_server_request
+    self._send_message(msg)
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/sock_client.py", line 151, in _send_message
+    self._sendall_with_error_handle(header + data)
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/sock_client.py", line 130, in _sendall_with_error_handle
+    sent = self._sock.send(data)
+           ^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+2025-06-23 10:30:05,097 ERROR   MainThread:2262 [wandb_init.py:init():1619] [no run ID] error in wandb.init()
+Traceback (most recent call last):
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/wandb_init.py", line 1609, in init
+    return wi.init(run_settings, run_config, run_printer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/wandb_init.py", line 876, in init
+    service.inform_init(
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/service_connection.py", line 147, in inform_init
+    self._client.send_server_request(spb.ServerRequest(inform_init=request))
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/sock_client.py", line 154, in send_server_request
+    self._send_message(msg)
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/sock_client.py", line 151, in _send_message
+    self._sendall_with_error_handle(header + data)
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/sock_client.py", line 130, in _sendall_with_error_handle
+    sent = self._sock.send(data)
+           ^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+2025-06-23 10:30:59,642 ERROR   MainThread:2262 [wandb_init.py:init():1619] [no run ID] error in wandb.init()
+Traceback (most recent call last):
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/wandb_init.py", line 1609, in init
+    return wi.init(run_settings, run_config, run_printer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/wandb_init.py", line 876, in init
+    service.inform_init(
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/service_connection.py", line 147, in inform_init
+    self._client.send_server_request(spb.ServerRequest(inform_init=request))
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/sock_client.py", line 154, in send_server_request
+    self._send_message(msg)
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/sock_client.py", line 151, in _send_message
+    self._sendall_with_error_handle(header + data)
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/sock_client.py", line 130, in _sendall_with_error_handle
+    sent = self._sock.send(data)
+           ^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe

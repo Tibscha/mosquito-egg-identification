@@ -9,7 +9,7 @@ from skimage import transform, filters, io
 from skimage.measure import label, regionprops
 from skimage.morphology import remove_small_objects, erosion, dilation, footprint_rectangle, remove_small_holes
 from skimage.transform import rotate, resize
-from tensorflow.keras.applications.efficientnet_v2 import preprocess_input
+from tensorflow.keras.applications.efficientnet_v2 import preprocess_input # type: ignore
 
 
 def segmentation(image, model):
@@ -188,6 +188,24 @@ def batch_image_import(image_paths):
     return images
 
 
+def segmented_image_import(data_path):
+    """
+    Imports the segmented csv data then importing
+    multiple segmented images and masks from paths inside the csv.
+
+    Args:
+        data_path (str): Data path to the segmented csv data.
+
+    Returns:
+        Pandas.DataFrame: DataFrame with succesfully loaded images and masks.
+    """
+    df = pd.read_csv(data_path)
+    for i, row in df.iterrows():
+        df.at[i, "segment"] = io.imread(row.segment_path)
+        df.at[i, "mask"] = io.imread(row.segment_mask_path)
+    return df
+
+
 def region_separation(segment_mask):
     """
     Refines a segmentation mask and extracts distinct labeled regions.
@@ -306,7 +324,7 @@ def show_images(image_df):
     plt.tight_layout()
 
 
-def rotate_and_pad_rgb_segment(row, output_shape=(200, 100)):
+def rotate_and_pad_rgb_segment(row, output_shape=(200, 200)):
     """
     Rotates an RGB image based on the given angle, crops the object using the rotated mask,
     resizes it while preserving aspect ratio, and pads it to the desired output shape.
@@ -365,7 +383,7 @@ def rotate_and_pad_rgb_segment(row, output_shape=(200, 100)):
     return padded
 
 
-def prepare_dataset(X, y, batch_size=32, shuffle=True):
+def prepare_dataset_tf(X, y, data_augmentation=None, batch_size=32, shuffle=True):
     """
     Erstellt ein tf.data.Dataset aus Bildern und Labels und bereitet es korrekt für EfficientNetV2B0 vor.
     
@@ -385,5 +403,36 @@ def prepare_dataset(X, y, batch_size=32, shuffle=True):
     if shuffle:
         ds = ds.shuffle(buffer_size=len(X))
     ds = ds.map(preprocess, num_parallel_calls=tf.data.AUTOTUNE)
-    ds = ds.batch(batch_size).prefetch(tf.data.AUTOTUNE)
+    ds = ds.batch(batch_size)
+    if data_augmentation:
+        ds = ds.map(lambda x, y: (data_augmentation(x, training = True), y),
+                num_parallel_calls=tf.data.AUTOTUNE)
+    
+    return ds.prefetch(buffer_size=tf.data.AUTOTUNE)
+
+
+def prepare_dataset_alb(X, y, augment_fn=None, batch_size=32, shuffle=True):
+    """
+    Erstellt ein tf.data.Dataset aus Bildern und Labels und bereitet es korrekt für EfficientNetV2B0 vor.
+    
+    - X: numpy array oder list of arrays, shape (num_samples, 200, 100, 3)
+    - y: list oder array von int64-Labels
+    - batch_size: Größe pro Batch
+    - shuffle: True/False – ob das Dataset geshuffelt wird
+    """
+
+    def preprocess(img, label):
+        img = tf.cast(img, tf.float32)
+        img = preprocess_input(img)
+        label = tf.cast(label, tf.int32)
+        return img, label
+
+    ds = tf.data.Dataset.from_tensor_slices((X, y))
+    ds = ds.map(preprocess, num_parallel_calls=tf.data.AUTOTUNE)
+    if shuffle:
+        ds = ds.shuffle(buffer_size=len(X))
+    if augment_fn:
+        ds = ds.map(augment_fn, num_parallel_calls=tf.data.AUTOTUNE)
+    ds = ds.batch(batch_size).prefetch(buffer_size=tf.data.AUTOTUNE)
+    
     return ds

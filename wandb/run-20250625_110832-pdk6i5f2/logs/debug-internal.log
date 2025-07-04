@@ -1,0 +1,16 @@
+{"time":"2025-06-25T11:08:32.699910544+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250625_110832-pdk6i5f2/logs/debug-core.log"}
+{"time":"2025-06-25T11:08:32.941181792+02:00","level":"INFO","msg":"stream: created new stream","id":"pdk6i5f2"}
+{"time":"2025-06-25T11:08:32.941209073+02:00","level":"INFO","msg":"stream: started","id":"pdk6i5f2"}
+{"time":"2025-06-25T11:08:32.94122368+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"pdk6i5f2"}
+{"time":"2025-06-25T11:08:32.941247715+02:00","level":"INFO","msg":"sender: started","stream_id":"pdk6i5f2"}
+{"time":"2025-06-25T11:08:32.941233669+02:00","level":"INFO","msg":"handler: started","stream_id":"pdk6i5f2"}
+{"time":"2025-06-25T11:08:33.2061475+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-25T11:09:04.14661887+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-06-25T11:09:04.14666127+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-06-25T11:09:05.1478681+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run_pdk6i5f2_model","runtime_seconds":11.271478893,"subtasks":[{"desc":"model-03.keras","runtime_seconds":0.034048598,"progress":"688.0KB/25.4MB"}]},{"desc":"uploading artifact run_pdk6i5f2_model","runtime_seconds":10.260542911},{"desc":"uploading artifact run_pdk6i5f2_model","runtime_seconds":9.243385887},{"desc":"uploading artifact run_pdk6i5f2_model","runtime_seconds":8.225336085},{"desc":"uploading artifact run_pdk6i5f2_model","runtime_seconds":7.226363866},{"desc":"uploading artifact run_pdk6i5f2_model","runtime_seconds":6.223266677},{"desc":"uploading artifact run_pdk6i5f2_model","runtime_seconds":5.232523739},{"desc":"uploading artifact run_pdk6i5f2_model","runtime_seconds":4.226782564},{"desc":"uploading artifact run-pdk6i5f2-confusion_matrix_table","runtime_seconds":1.280576186}],"total_operations":9}}
+{"time":"2025-06-25T11:09:56.900415635+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-06-25T11:09:57.08821588+02:00","level":"INFO","msg":"stream: closing","id":"pdk6i5f2"}
+{"time":"2025-06-25T11:09:57.088225598+02:00","level":"INFO","msg":"handler: closed","stream_id":"pdk6i5f2"}
+{"time":"2025-06-25T11:09:57.088235396+02:00","level":"INFO","msg":"sender: closed","stream_id":"pdk6i5f2"}
+{"time":"2025-06-25T11:09:57.088232571+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"pdk6i5f2"}
+{"time":"2025-06-25T11:09:57.088272305+02:00","level":"INFO","msg":"stream: closed","id":"pdk6i5f2"}

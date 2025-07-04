@@ -1,0 +1,17 @@
+{"time":"2025-06-30T12:46:46.101391396+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250630_124646-s1lz92f1/logs/debug-core.log"}
+{"time":"2025-06-30T12:46:46.389211183+02:00","level":"INFO","msg":"stream: created new stream","id":"s1lz92f1"}
+{"time":"2025-06-30T12:46:46.389245668+02:00","level":"INFO","msg":"stream: started","id":"s1lz92f1"}
+{"time":"2025-06-30T12:46:46.389253402+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"s1lz92f1"}
+{"time":"2025-06-30T12:46:46.389272067+02:00","level":"INFO","msg":"handler: started","stream_id":"s1lz92f1"}
+{"time":"2025-06-30T12:46:46.389257951+02:00","level":"INFO","msg":"sender: started","stream_id":"s1lz92f1"}
+{"time":"2025-06-30T12:46:46.637237743+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-30T12:47:20.218563573+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-06-30T12:47:20.218590383+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-06-30T12:47:21.219911351+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run_s1lz92f1_model","runtime_seconds":14.784495942,"subtasks":[{"desc":"model-04.keras","runtime_seconds":0.237191585,"progress":"1.0MB/25.4MB"}]},{"desc":"uploading artifact run_s1lz92f1_model","runtime_seconds":13.819131778},{"desc":"uploading artifact run_s1lz92f1_model","runtime_seconds":13.185889283},{"desc":"uploading artifact run_s1lz92f1_model","runtime_seconds":12.559752241},{"desc":"uploading artifact run_s1lz92f1_model","runtime_seconds":11.954813428},{"desc":"uploading artifact run_s1lz92f1_model","runtime_seconds":11.016527337},{"desc":"uploading artifact run_s1lz92f1_model","runtime_seconds":10.407728119},{"desc":"uploading artifact run_s1lz92f1_model","runtime_seconds":9.749047211},{"desc":"uploading artifact run_s1lz92f1_model","runtime_seconds":9.129429639},{"desc":"uploading artifact run_s1lz92f1_model","runtime_seconds":8.483920188}],"total_operations":18}}
+{"time":"2025-06-30T12:48:21.283947286+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run_s1lz92f1_model","runtime_seconds":67.301629361,"subtasks":[{"desc":"model-15.keras","runtime_seconds":1.899461225,"progress":"10.0MB/25.4MB"}]},{"desc":"uploading artifact run_s1lz92f1_model","runtime_seconds":66.669752606},{"desc":"uploading artifact run_s1lz92f1_model","runtime_seconds":66.036091109},{"desc":"uploading artifact run_s1lz92f1_model","runtime_seconds":65.39773009},{"desc":"uploading artifact run_s1lz92f1_model","runtime_seconds":64.393621637},{"desc":"uploading artifact run_s1lz92f1_model","runtime_seconds":63.79925661}],"total_operations":6}}
+{"time":"2025-06-30T12:48:48.531269425+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-06-30T12:48:48.84236568+02:00","level":"INFO","msg":"stream: closing","id":"s1lz92f1"}
+{"time":"2025-06-30T12:48:48.842375879+02:00","level":"INFO","msg":"handler: closed","stream_id":"s1lz92f1"}
+{"time":"2025-06-30T12:48:48.84238218+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"s1lz92f1"}
+{"time":"2025-06-30T12:48:48.842385156+02:00","level":"INFO","msg":"sender: closed","stream_id":"s1lz92f1"}
+{"time":"2025-06-30T12:48:48.84243027+02:00","level":"INFO","msg":"stream: closed","id":"s1lz92f1"}

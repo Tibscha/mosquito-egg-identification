@@ -1,0 +1,17 @@
+{"time":"2025-06-30T10:31:10.29936207+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250630_103110-abrghlbl/logs/debug-core.log"}
+{"time":"2025-06-30T10:31:10.542056295+02:00","level":"INFO","msg":"stream: created new stream","id":"abrghlbl"}
+{"time":"2025-06-30T10:31:10.542082734+02:00","level":"INFO","msg":"stream: started","id":"abrghlbl"}
+{"time":"2025-06-30T10:31:10.542089246+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"abrghlbl"}
+{"time":"2025-06-30T10:31:10.542100818+02:00","level":"INFO","msg":"handler: started","stream_id":"abrghlbl"}
+{"time":"2025-06-30T10:31:10.542094767+02:00","level":"INFO","msg":"sender: started","stream_id":"abrghlbl"}
+{"time":"2025-06-30T10:31:10.792704146+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-30T10:31:46.688304789+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-06-30T10:31:46.688340976+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-06-30T10:31:47.689647775+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":11.87476841,"subtasks":[{"desc":"model-03.keras","runtime_seconds":0.96475612,"progress":"2.1MB/25.4MB"}]},{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":10.987331771000001},{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":10.332041088},{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":9.657136089},{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":9.297696538},{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":8.264843222},{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":7.941806643},{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":7.625236936},{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":7.279955182},{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":6.953211604}],"total_operations":19}}
+{"time":"2025-06-30T10:32:47.752217014+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":66.348670626},{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":66.023454588},{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":65.67930593},{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":65.350519779},{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":65.003461608},{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":64.649287696},{"desc":"uploading artifact run_abrghlbl_model","runtime_seconds":64.247505154}],"total_operations":7}}
+{"time":"2025-06-30T10:33:23.654575863+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-06-30T10:33:23.862235099+02:00","level":"INFO","msg":"stream: closing","id":"abrghlbl"}
+{"time":"2025-06-30T10:33:23.862245318+02:00","level":"INFO","msg":"handler: closed","stream_id":"abrghlbl"}
+{"time":"2025-06-30T10:33:23.862259484+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"abrghlbl"}
+{"time":"2025-06-30T10:33:23.862263892+02:00","level":"INFO","msg":"sender: closed","stream_id":"abrghlbl"}
+{"time":"2025-06-30T10:33:23.862297185+02:00","level":"INFO","msg":"stream: closed","id":"abrghlbl"}

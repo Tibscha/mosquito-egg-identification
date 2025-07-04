@@ -1,0 +1,58 @@
+_wandb:
+    value:
+        cli_version: 0.20.1
+        m:
+            - "1": epoch/epoch
+              "6":
+                - 3
+              "7": []
+        python_version: 3.12.11
+        t:
+            "1":
+                - 1
+                - 2
+                - 3
+                - 5
+                - 7
+                - 41
+                - 53
+                - 80
+            "2":
+                - 1
+                - 2
+                - 3
+                - 5
+                - 7
+                - 41
+                - 53
+                - 80
+            "3":
+                - 2
+                - 7
+                - 16
+                - 38
+                - 39
+                - 55
+            "4": 3.12.11
+            "5": 0.20.1
+            "8":
+                - 1
+            "12": 0.20.1
+            "13": linux-x86_64
+architecture:
+    value: EfficientNetV2B0
+batch_size:
+    value: 32
+epochs:
+    value: 100
+input_shape:
+    value:
+        - 200
+        - 200
+        - 3
+loss:
+    value: categorical_crossentropy
+num_classes:
+    value: 2
+optimizer:
+    value: adam

@@ -1,0 +1,7 @@
+2025-06-23 10:30:59,642 INFO    MainThread:2262 [wandb_init.py:setup_run_log_directory():703] Logging user logs to /home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250623_103059-mxaevnw0/logs/debug.log
+2025-06-23 10:30:59,642 INFO    MainThread:2262 [wandb_init.py:setup_run_log_directory():704] Logging internal logs to /home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250623_103059-mxaevnw0/logs/debug-internal.log
+2025-06-23 10:30:59,642 INFO    MainThread:2262 [wandb_init.py:init():831] calling init triggers
+2025-06-23 10:30:59,642 INFO    MainThread:2262 [wandb_init.py:init():836] wandb.init called with sweep_config: {}
+config: {'architecture': 'EfficientNetV2B0', 'input_shape': (200, 200, 3), 'epochs': 10, 'batch_size': 20, 'optimizer': 'adam', 'loss': 'categorical_crossentropy', 'num_classes': 2, '_wandb': {}}
+2025-06-23 10:30:59,642 INFO    MainThread:2262 [wandb_init.py:init():872] starting backend
+2025-06-23 10:30:59,642 INFO    MainThread:2262 [wandb_init.py:init():875] sending inform_init request

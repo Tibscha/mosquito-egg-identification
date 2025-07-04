@@ -1,0 +1,11 @@
+2025-06-23 10:29:27,910 INFO    MainThread:2262 [wandb_init.py:setup_run_log_directory():703] Logging user logs to /home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250623_102927-kbxl7rf4/logs/debug.log
+2025-06-23 10:29:27,910 INFO    MainThread:2262 [wandb_init.py:setup_run_log_directory():704] Logging internal logs to /home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250623_102927-kbxl7rf4/logs/debug-internal.log
+2025-06-23 10:29:27,910 INFO    MainThread:2262 [wandb_init.py:monkeypatch_ipython():622] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x76ad47e13440>
+2025-06-23 10:29:27,910 INFO    MainThread:2262 [wandb_init.py:init():831] calling init triggers
+2025-06-23 10:29:27,910 INFO    MainThread:2262 [wandb_init.py:init():836] wandb.init called with sweep_config: {}
+config: {'architecture': 'EfficientNetV2B0', 'input_shape': (200, 200, 3), 'epochs': 10, 'batch_size': 20, 'optimizer': 'adam', 'loss': 'categorical_crossentropy', 'num_classes': 2, '_wandb': {}}
+2025-06-23 10:29:27,910 INFO    MainThread:2262 [wandb_init.py:init():872] starting backend
+2025-06-23 10:29:27,910 INFO    MainThread:2262 [wandb_init.py:init():875] sending inform_init request
+2025-06-23 10:29:27,911 INFO    MainThread:2262 [wandb_init.py:init():883] backend started and connected
+2025-06-23 10:29:27,912 INFO    MainThread:2262 [wandb_run.py:_label_probe_notebook():1299] probe notebook
+2025-06-23 10:29:27,913 INFO    MainThread:2262 [wandb_init.py:init():956] updated telemetry

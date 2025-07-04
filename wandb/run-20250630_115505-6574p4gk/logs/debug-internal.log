@@ -1,0 +1,17 @@
+{"time":"2025-06-30T11:55:05.168966488+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250630_115505-6574p4gk/logs/debug-core.log"}
+{"time":"2025-06-30T11:55:05.426022116+02:00","level":"INFO","msg":"stream: created new stream","id":"6574p4gk"}
+{"time":"2025-06-30T11:55:05.426048736+02:00","level":"INFO","msg":"stream: started","id":"6574p4gk"}
+{"time":"2025-06-30T11:55:05.426057132+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"6574p4gk"}
+{"time":"2025-06-30T11:55:05.426076418+02:00","level":"INFO","msg":"handler: started","stream_id":"6574p4gk"}
+{"time":"2025-06-30T11:55:05.426064616+02:00","level":"INFO","msg":"sender: started","stream_id":"6574p4gk"}
+{"time":"2025-06-30T11:55:05.714900887+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-30T11:55:42.621123444+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-06-30T11:55:42.621151436+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-06-30T11:55:43.622466875+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run_6574p4gk_model","runtime_seconds":17.787699233},{"desc":"uploading artifact run_6574p4gk_model","runtime_seconds":16.765878889},{"desc":"uploading artifact run_6574p4gk_model","runtime_seconds":15.695431366},{"desc":"uploading artifact run_6574p4gk_model","runtime_seconds":14.962347908},{"desc":"uploading artifact run_6574p4gk_model","runtime_seconds":14.199921087},{"desc":"uploading artifact run_6574p4gk_model","runtime_seconds":13.483579219},{"desc":"uploading artifact run_6574p4gk_model","runtime_seconds":12.774317167},{"desc":"uploading artifact run_6574p4gk_model","runtime_seconds":12.017715849},{"desc":"uploading artifact run_6574p4gk_model","runtime_seconds":11.254696663},{"desc":"uploading artifact run_6574p4gk_model","runtime_seconds":10.533205974}],"total_operations":18}}
+{"time":"2025-06-30T11:56:43.688690256+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run_6574p4gk_model","runtime_seconds":66.415342539},{"desc":"uploading artifact run_6574p4gk_model","runtime_seconds":65.653680084},{"desc":"uploading artifact run_6574p4gk_model","runtime_seconds":64.585477},{"desc":"uploading artifact run_6574p4gk_model","runtime_seconds":63.856238851}],"total_operations":4}}
+{"time":"2025-06-30T11:57:04.054199639+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-06-30T11:57:04.230465733+02:00","level":"INFO","msg":"stream: closing","id":"6574p4gk"}
+{"time":"2025-06-30T11:57:04.230479979+02:00","level":"INFO","msg":"handler: closed","stream_id":"6574p4gk"}
+{"time":"2025-06-30T11:57:04.230488004+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"6574p4gk"}
+{"time":"2025-06-30T11:57:04.230496701+02:00","level":"INFO","msg":"sender: closed","stream_id":"6574p4gk"}
+{"time":"2025-06-30T11:57:04.230543157+02:00","level":"INFO","msg":"stream: closed","id":"6574p4gk"}

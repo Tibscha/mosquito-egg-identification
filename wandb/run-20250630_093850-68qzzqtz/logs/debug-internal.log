@@ -1,0 +1,17 @@
+{"time":"2025-06-30T09:38:50.722303648+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250630_093850-68qzzqtz/logs/debug-core.log"}
+{"time":"2025-06-30T09:38:50.963471498+02:00","level":"INFO","msg":"stream: created new stream","id":"68qzzqtz"}
+{"time":"2025-06-30T09:38:50.963519378+02:00","level":"INFO","msg":"handler: started","stream_id":"68qzzqtz"}
+{"time":"2025-06-30T09:38:50.963522804+02:00","level":"INFO","msg":"sender: started","stream_id":"68qzzqtz"}
+{"time":"2025-06-30T09:38:50.963550806+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"68qzzqtz"}
+{"time":"2025-06-30T09:38:50.963565714+02:00","level":"INFO","msg":"stream: started","id":"68qzzqtz"}
+{"time":"2025-06-30T09:38:51.150576859+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-30T09:39:39.408310758+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-06-30T09:39:39.408337017+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-06-30T09:39:40.40966731+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run_68qzzqtz_model","runtime_seconds":20.199463665},{"desc":"uploading artifact run_68qzzqtz_model","runtime_seconds":19.180497247},{"desc":"uploading artifact run_68qzzqtz_model","runtime_seconds":18.143915814},{"desc":"uploading artifact run_68qzzqtz_model","runtime_seconds":17.106854392},{"desc":"uploading artifact run_68qzzqtz_model","runtime_seconds":16.075368478},{"desc":"uploading artifact run_68qzzqtz_model","runtime_seconds":15.014614659},{"desc":"uploading artifact run_68qzzqtz_model","runtime_seconds":13.953291887},{"desc":"uploading artifact run_68qzzqtz_model","runtime_seconds":12.712245201},{"desc":"uploading artifact run_68qzzqtz_model","runtime_seconds":11.657441246},{"desc":"uploading artifact run_68qzzqtz_model","runtime_seconds":10.389311674}],"total_operations":17}}
+{"time":"2025-06-30T09:40:40.469406237+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run_68qzzqtz_model","runtime_seconds":67.311641233},{"desc":"uploading artifact run_68qzzqtz_model","runtime_seconds":66.279364603},{"desc":"uploading artifact run_68qzzqtz_model","runtime_seconds":65.256317568},{"desc":"uploading artifact run_68qzzqtz_model","runtime_seconds":63.997066798}],"total_operations":4}}
+{"time":"2025-06-30T09:40:55.284737898+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-06-30T09:40:55.441728262+02:00","level":"INFO","msg":"stream: closing","id":"68qzzqtz"}
+{"time":"2025-06-30T09:40:55.44173812+02:00","level":"INFO","msg":"handler: closed","stream_id":"68qzzqtz"}
+{"time":"2025-06-30T09:40:55.441745394+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"68qzzqtz"}
+{"time":"2025-06-30T09:40:55.441753228+02:00","level":"INFO","msg":"sender: closed","stream_id":"68qzzqtz"}
+{"time":"2025-06-30T09:40:55.44178614+02:00","level":"INFO","msg":"stream: closed","id":"68qzzqtz"}
