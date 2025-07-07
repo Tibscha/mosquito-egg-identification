@@ -201,8 +201,12 @@ def segmented_image_import(data_path):
     """
     df = pd.read_csv(data_path)
     for i, row in df.iterrows():
-        df.at[i, "segment"] = io.imread(row.segment_path)
-        df.at[i, "mask"] = io.imread(row.segment_mask_path)
+        try:
+            df.at[i, "segment"] = io.imread(row.segment_path)
+            df.at[i, "mask"] = io.imread(row.segment_mask_path)
+        except Exception as e:
+            print(f"Skipping invalid image file: {row.segment_path} ({e})")
+            continue
     return df
 
 

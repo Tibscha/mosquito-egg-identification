@@ -1,0 +1,17 @@
+{"time":"2025-07-07T07:40:56.217638031+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250707_074055-2fw5dnsb/logs/debug-core.log"}
+{"time":"2025-07-07T07:40:56.570680627+02:00","level":"INFO","msg":"stream: created new stream","id":"2fw5dnsb"}
+{"time":"2025-07-07T07:40:56.570717466+02:00","level":"INFO","msg":"stream: started","id":"2fw5dnsb"}
+{"time":"2025-07-07T07:40:56.570729788+02:00","level":"INFO","msg":"sender: started","stream_id":"2fw5dnsb"}
+{"time":"2025-07-07T07:40:56.570724889+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"2fw5dnsb"}
+{"time":"2025-07-07T07:40:56.570745939+02:00","level":"INFO","msg":"handler: started","stream_id":"2fw5dnsb"}
+{"time":"2025-07-07T07:40:56.774471759+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-07T07:41:46.345939421+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-07T07:41:46.345967764+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-07T07:41:47.347368243+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":22.11077267,"subtasks":[{"desc":"model-04.keras","runtime_seconds":3.148106898,"progress":"23.5MB/25.4MB"}]},{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":21.351273576},{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":20.582059962},{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":19.290581869},{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":18.224096677},{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":16.094595567},{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":15.29989054},{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":14.309185041},{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":13.507302489},{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":12.723336463}],"total_operations":19}}
+{"time":"2025-07-07T07:42:47.411963116+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":72.010426019,"subtasks":[{"desc":"model-14.keras","runtime_seconds":2.987344293,"progress":"12.1MB/25.4MB"}]},{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":71.236749466},{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":70.459169038},{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":69.646159389},{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":68.571771629},{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":67.800748818},{"desc":"uploading artifact run_2fw5dnsb_model","runtime_seconds":66.998608625}],"total_operations":7}}
+{"time":"2025-07-07T07:43:31.580693901+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-07T07:43:31.764063873+02:00","level":"INFO","msg":"stream: closing","id":"2fw5dnsb"}
+{"time":"2025-07-07T07:43:31.764076687+02:00","level":"INFO","msg":"handler: closed","stream_id":"2fw5dnsb"}
+{"time":"2025-07-07T07:43:31.764084531+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"2fw5dnsb"}
+{"time":"2025-07-07T07:43:31.764087347+02:00","level":"INFO","msg":"sender: closed","stream_id":"2fw5dnsb"}
+{"time":"2025-07-07T07:43:31.764131128+02:00","level":"INFO","msg":"stream: closed","id":"2fw5dnsb"}

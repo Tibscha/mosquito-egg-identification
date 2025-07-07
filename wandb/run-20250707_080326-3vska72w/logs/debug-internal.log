@@ -1,0 +1,41 @@
+{"time":"2025-07-07T08:03:26.796478446+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250707_080326-3vska72w/logs/debug-core.log"}
+{"time":"2025-07-07T08:03:27.044689431+02:00","level":"INFO","msg":"stream: created new stream","id":"3vska72w"}
+{"time":"2025-07-07T08:03:27.044716021+02:00","level":"INFO","msg":"stream: started","id":"3vska72w"}
+{"time":"2025-07-07T08:03:27.04472607+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"3vska72w"}
+{"time":"2025-07-07T08:03:27.044745075+02:00","level":"INFO","msg":"handler: started","stream_id":"3vska72w"}
+{"time":"2025-07-07T08:03:27.044732632+02:00","level":"INFO","msg":"sender: started","stream_id":"3vska72w"}
+{"time":"2025-07-07T08:03:27.28160341+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-07T08:18:17.722222329+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-07T08:18:17.762432799+02:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-07T08:18:54.105131068+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-07T08:18:54.1454169+02:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-07T08:18:55.693694417+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-07T08:18:55.695540964+02:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-07T08:18:57.72398687+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-07T08:18:57.764409639+02:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-07T08:18:58.594388674+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-07T08:18:58.596026973+02:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-07T08:19:00.76184061+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-07T08:19:00.763896919+02:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-07T08:19:01.341742108+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-07T08:19:01.34369285+02:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-07T08:19:05.232348199+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-07T08:19:05.235761942+02:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-07T08:19:12.642975696+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-07T08:19:12.645575951+02:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-07T08:19:12.796744598+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-07T08:19:12.802481729+02:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-07T08:19:15.510945336+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-07T08:19:15.513450533+02:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-07T08:19:24.017048208+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-07T08:19:24.646404998+02:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-07T08:19:27.4595093+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-07T08:19:27.500432732+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-07T08:19:27.500478027+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-07T08:19:28.464745785+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading output.log","runtime_seconds":0.701301979},{"desc":"uploading config.yaml","runtime_seconds":0.54748084,"progress":"874B/874B"}],"total_operations":2}}
+{"time":"2025-07-07T08:19:28.522285199+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-07T08:19:28.71493475+02:00","level":"INFO","msg":"stream: closing","id":"3vska72w"}
+{"time":"2025-07-07T08:19:28.714943806+02:00","level":"INFO","msg":"handler: closed","stream_id":"3vska72w"}
+{"time":"2025-07-07T08:19:28.714949888+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"3vska72w"}
+{"time":"2025-07-07T08:19:28.714954957+02:00","level":"INFO","msg":"sender: closed","stream_id":"3vska72w"}
+{"time":"2025-07-07T08:19:28.714995904+02:00","level":"INFO","msg":"stream: closed","id":"3vska72w"}

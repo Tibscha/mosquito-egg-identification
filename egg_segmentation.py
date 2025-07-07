@@ -39,6 +39,7 @@ for i, row in df.iterrows():
         content_mask = row['content_mask']
         segment_mask[~content_mask] = 1
     regions, labeled_overlay = ecf.region_separation(segment_mask)
+    species = row['species']
     for j, region in enumerate(regions):
         masked_image, mask, parameters = ecf.region_processing(row['image'], labeled_overlay, region)
         segment_path = f"Data/processed/segment_images/image_{i}_segment_{j}.png"
