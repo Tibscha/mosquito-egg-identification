@@ -1,0 +1,16 @@
+{"time":"2025-07-08T10:23:58.992439636+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250708_102358-whfzkluu/logs/debug-core.log"}
+{"time":"2025-07-08T10:23:59.231616693+02:00","level":"INFO","msg":"stream: created new stream","id":"whfzkluu"}
+{"time":"2025-07-08T10:23:59.231649364+02:00","level":"INFO","msg":"stream: started","id":"whfzkluu"}
+{"time":"2025-07-08T10:23:59.231660435+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"whfzkluu"}
+{"time":"2025-07-08T10:23:59.231683969+02:00","level":"INFO","msg":"sender: started","stream_id":"whfzkluu"}
+{"time":"2025-07-08T10:23:59.231666596+02:00","level":"INFO","msg":"handler: started","stream_id":"whfzkluu"}
+{"time":"2025-07-08T10:23:59.531947253+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-08T10:25:29.808416459+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-08T10:25:29.808462224+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-08T10:25:30.780654239+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-whfzkluu-confusion_matrix_table","runtime_seconds":0.909438435,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.266489235,"progress":"658B/658B"}]},{"desc":"uploading media/table/confusion_matrix_table_100_449fde1406fb025712c8.table.json","runtime_seconds":0.728098392,"progress":"193B/193B"},{"desc":"uploading output.log","runtime_seconds":0.728089766},{"desc":"uploading wandb-summary.json","runtime_seconds":0.728088464,"progress":"984B/984B"}],"total_operations":4}}
+{"time":"2025-07-08T10:25:32.111349202+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-08T10:25:32.292250416+02:00","level":"INFO","msg":"stream: closing","id":"whfzkluu"}
+{"time":"2025-07-08T10:25:32.292260895+02:00","level":"INFO","msg":"handler: closed","stream_id":"whfzkluu"}
+{"time":"2025-07-08T10:25:32.29226852+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"whfzkluu"}
+{"time":"2025-07-08T10:25:32.292273078+02:00","level":"INFO","msg":"sender: closed","stream_id":"whfzkluu"}
+{"time":"2025-07-08T10:25:32.29231184+02:00","level":"INFO","msg":"stream: closed","id":"whfzkluu"}

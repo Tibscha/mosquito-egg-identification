@@ -1,0 +1,16 @@
+{"time":"2025-07-08T10:11:12.246338731+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250708_101112-nuu20b4r/logs/debug-core.log"}
+{"time":"2025-07-08T10:11:12.487596659+02:00","level":"INFO","msg":"stream: created new stream","id":"nuu20b4r"}
+{"time":"2025-07-08T10:11:12.487625353+02:00","level":"INFO","msg":"stream: started","id":"nuu20b4r"}
+{"time":"2025-07-08T10:11:12.487637185+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"nuu20b4r"}
+{"time":"2025-07-08T10:11:12.487648255+02:00","level":"INFO","msg":"sender: started","stream_id":"nuu20b4r"}
+{"time":"2025-07-08T10:11:12.487658134+02:00","level":"INFO","msg":"handler: started","stream_id":"nuu20b4r"}
+{"time":"2025-07-08T10:11:12.733312418+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-08T10:12:47.121249962+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-08T10:12:47.121279487+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-08T10:12:48.122685365+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-nuu20b4r-confusion_matrix_table","runtime_seconds":1.004213349,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.340592378,"progress":"659B/659B"}]}],"total_operations":1}}
+{"time":"2025-07-08T10:12:49.340104219+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-08T10:12:49.545822318+02:00","level":"INFO","msg":"stream: closing","id":"nuu20b4r"}
+{"time":"2025-07-08T10:12:49.545831715+02:00","level":"INFO","msg":"handler: closed","stream_id":"nuu20b4r"}
+{"time":"2025-07-08T10:12:49.545842315+02:00","level":"INFO","msg":"sender: closed","stream_id":"nuu20b4r"}
+{"time":"2025-07-08T10:12:49.545838257+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"nuu20b4r"}
+{"time":"2025-07-08T10:12:49.545868624+02:00","level":"INFO","msg":"stream: closed","id":"nuu20b4r"}

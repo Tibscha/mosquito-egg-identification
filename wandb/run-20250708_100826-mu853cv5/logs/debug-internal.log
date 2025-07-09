@@ -1,0 +1,16 @@
+{"time":"2025-07-08T10:08:26.922458677+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250708_100826-mu853cv5/logs/debug-core.log"}
+{"time":"2025-07-08T10:08:27.173758279+02:00","level":"INFO","msg":"stream: created new stream","id":"mu853cv5"}
+{"time":"2025-07-08T10:08:27.173782955+02:00","level":"INFO","msg":"stream: started","id":"mu853cv5"}
+{"time":"2025-07-08T10:08:27.173788475+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"mu853cv5"}
+{"time":"2025-07-08T10:08:27.173808623+02:00","level":"INFO","msg":"handler: started","stream_id":"mu853cv5"}
+{"time":"2025-07-08T10:08:27.17381809+02:00","level":"INFO","msg":"sender: started","stream_id":"mu853cv5"}
+{"time":"2025-07-08T10:08:27.446124885+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-08T10:09:56.575518712+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-08T10:09:56.575554048+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-08T10:09:57.576872955+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-mu853cv5-confusion_matrix_table","runtime_seconds":1.004692284,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.414585666,"progress":"658B/658B"}]}],"total_operations":1}}
+{"time":"2025-07-08T10:09:58.822197788+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-08T10:09:58.995903021+02:00","level":"INFO","msg":"stream: closing","id":"mu853cv5"}
+{"time":"2025-07-08T10:09:58.995915093+02:00","level":"INFO","msg":"handler: closed","stream_id":"mu853cv5"}
+{"time":"2025-07-08T10:09:58.995923419+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"mu853cv5"}
+{"time":"2025-07-08T10:09:58.995929751+02:00","level":"INFO","msg":"sender: closed","stream_id":"mu853cv5"}
+{"time":"2025-07-08T10:09:58.995963744+02:00","level":"INFO","msg":"stream: closed","id":"mu853cv5"}

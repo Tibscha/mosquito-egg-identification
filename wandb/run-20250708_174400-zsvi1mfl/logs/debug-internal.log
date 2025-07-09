@@ -1,0 +1,16 @@
+{"time":"2025-07-08T17:44:00.561547365+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250708_174400-zsvi1mfl/logs/debug-core.log"}
+{"time":"2025-07-08T17:44:00.796282854+02:00","level":"INFO","msg":"stream: created new stream","id":"zsvi1mfl"}
+{"time":"2025-07-08T17:44:00.796313732+02:00","level":"INFO","msg":"stream: started","id":"zsvi1mfl"}
+{"time":"2025-07-08T17:44:00.796322508+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"zsvi1mfl"}
+{"time":"2025-07-08T17:44:00.796339069+02:00","level":"INFO","msg":"sender: started","stream_id":"zsvi1mfl"}
+{"time":"2025-07-08T17:44:00.79632901+02:00","level":"INFO","msg":"handler: started","stream_id":"zsvi1mfl"}
+{"time":"2025-07-08T17:44:01.075194381+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-08T17:45:29.109161248+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-08T17:45:29.109192105+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-08T17:45:30.110471346+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-zsvi1mfl-confusion_matrix_table","runtime_seconds":1.003771713,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.257306465,"progress":"659B/659B"}]}],"total_operations":1}}
+{"time":"2025-07-08T17:45:31.499624254+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-08T17:45:31.692437832+02:00","level":"INFO","msg":"stream: closing","id":"zsvi1mfl"}
+{"time":"2025-07-08T17:45:31.692447741+02:00","level":"INFO","msg":"handler: closed","stream_id":"zsvi1mfl"}
+{"time":"2025-07-08T17:45:31.692459312+02:00","level":"INFO","msg":"sender: closed","stream_id":"zsvi1mfl"}
+{"time":"2025-07-08T17:45:31.692455816+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"zsvi1mfl"}
+{"time":"2025-07-08T17:45:31.69249005+02:00","level":"INFO","msg":"stream: closed","id":"zsvi1mfl"}

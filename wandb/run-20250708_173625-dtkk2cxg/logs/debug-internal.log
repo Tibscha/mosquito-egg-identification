@@ -1,0 +1,16 @@
+{"time":"2025-07-08T17:36:25.486548962+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250708_173625-dtkk2cxg/logs/debug-core.log"}
+{"time":"2025-07-08T17:36:25.720084058+02:00","level":"INFO","msg":"stream: created new stream","id":"dtkk2cxg"}
+{"time":"2025-07-08T17:36:25.720111249+02:00","level":"INFO","msg":"stream: started","id":"dtkk2cxg"}
+{"time":"2025-07-08T17:36:25.720118603+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"dtkk2cxg"}
+{"time":"2025-07-08T17:36:25.720128321+02:00","level":"INFO","msg":"handler: started","stream_id":"dtkk2cxg"}
+{"time":"2025-07-08T17:36:25.720135334+02:00","level":"INFO","msg":"sender: started","stream_id":"dtkk2cxg"}
+{"time":"2025-07-08T17:36:25.958098644+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-08T17:37:16.002365335+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-08T17:37:16.002392726+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-08T17:37:17.003624047+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-dtkk2cxg-confusion_matrix_table","runtime_seconds":1.003613226}],"total_operations":1}}
+{"time":"2025-07-08T17:37:17.600589102+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-08T17:37:17.806934296+02:00","level":"INFO","msg":"stream: closing","id":"dtkk2cxg"}
+{"time":"2025-07-08T17:37:17.806943333+02:00","level":"INFO","msg":"handler: closed","stream_id":"dtkk2cxg"}
+{"time":"2025-07-08T17:37:17.806950707+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"dtkk2cxg"}
+{"time":"2025-07-08T17:37:17.806960044+02:00","level":"INFO","msg":"sender: closed","stream_id":"dtkk2cxg"}
+{"time":"2025-07-08T17:37:17.806991062+02:00","level":"INFO","msg":"stream: closed","id":"dtkk2cxg"}

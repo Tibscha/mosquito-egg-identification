@@ -1,0 +1,16 @@
+{"time":"2025-07-08T10:02:03.884869751+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250708_100203-kydwaych/logs/debug-core.log"}
+{"time":"2025-07-08T10:02:04.145388151+02:00","level":"INFO","msg":"stream: created new stream","id":"kydwaych"}
+{"time":"2025-07-08T10:02:04.145415943+02:00","level":"INFO","msg":"stream: started","id":"kydwaych"}
+{"time":"2025-07-08T10:02:04.145426944+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"kydwaych"}
+{"time":"2025-07-08T10:02:04.145445568+02:00","level":"INFO","msg":"handler: started","stream_id":"kydwaych"}
+{"time":"2025-07-08T10:02:04.145433325+02:00","level":"INFO","msg":"sender: started","stream_id":"kydwaych"}
+{"time":"2025-07-08T10:02:04.473237342+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-08T10:03:27.83074124+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-08T10:03:27.830769343+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-08T10:03:28.832168127+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-kydwaych-confusion_matrix_table","runtime_seconds":1.004016681,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.398044849,"progress":"659B/659B"}]}],"total_operations":1}}
+{"time":"2025-07-08T10:03:30.017929678+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-08T10:03:30.348835345+02:00","level":"INFO","msg":"stream: closing","id":"kydwaych"}
+{"time":"2025-07-08T10:03:30.348845073+02:00","level":"INFO","msg":"handler: closed","stream_id":"kydwaych"}
+{"time":"2025-07-08T10:03:30.34885434+02:00","level":"INFO","msg":"sender: closed","stream_id":"kydwaych"}
+{"time":"2025-07-08T10:03:30.348852146+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"kydwaych"}
+{"time":"2025-07-08T10:03:30.348893042+02:00","level":"INFO","msg":"stream: closed","id":"kydwaych"}

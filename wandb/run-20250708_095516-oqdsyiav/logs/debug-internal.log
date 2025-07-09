@@ -1,0 +1,16 @@
+{"time":"2025-07-08T09:55:16.590175126+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250708_095516-oqdsyiav/logs/debug-core.log"}
+{"time":"2025-07-08T09:55:16.848189172+02:00","level":"INFO","msg":"stream: created new stream","id":"oqdsyiav"}
+{"time":"2025-07-08T09:55:16.848215582+02:00","level":"INFO","msg":"stream: started","id":"oqdsyiav"}
+{"time":"2025-07-08T09:55:16.848227714+02:00","level":"INFO","msg":"sender: started","stream_id":"oqdsyiav"}
+{"time":"2025-07-08T09:55:16.848222966+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"oqdsyiav"}
+{"time":"2025-07-08T09:55:16.848245307+02:00","level":"INFO","msg":"handler: started","stream_id":"oqdsyiav"}
+{"time":"2025-07-08T09:55:17.128386275+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-08T09:56:07.280461746+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-08T09:56:07.280515055+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-08T09:56:08.242826427+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-oqdsyiav-confusion_matrix_table","runtime_seconds":1.003891593,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.346282716,"progress":"659B/659B"}]}],"total_operations":1}}
+{"time":"2025-07-08T09:56:09.510536474+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-08T09:56:09.751147388+02:00","level":"INFO","msg":"stream: closing","id":"oqdsyiav"}
+{"time":"2025-07-08T09:56:09.751158559+02:00","level":"INFO","msg":"handler: closed","stream_id":"oqdsyiav"}
+{"time":"2025-07-08T09:56:09.751175411+02:00","level":"INFO","msg":"sender: closed","stream_id":"oqdsyiav"}
+{"time":"2025-07-08T09:56:09.75116941+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"oqdsyiav"}
+{"time":"2025-07-08T09:56:09.751204695+02:00","level":"INFO","msg":"stream: closed","id":"oqdsyiav"}
