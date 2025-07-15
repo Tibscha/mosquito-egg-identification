@@ -1,0 +1,16 @@
+{"time":"2025-07-15T15:10:27.879018003+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250715_151027-w9uls297/logs/debug-core.log"}
+{"time":"2025-07-15T15:10:28.118117628+02:00","level":"INFO","msg":"stream: created new stream","id":"w9uls297"}
+{"time":"2025-07-15T15:10:28.118147754+02:00","level":"INFO","msg":"stream: started","id":"w9uls297"}
+{"time":"2025-07-15T15:10:28.118156441+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"w9uls297"}
+{"time":"2025-07-15T15:10:28.118164225+02:00","level":"INFO","msg":"handler: started","stream_id":"w9uls297"}
+{"time":"2025-07-15T15:10:28.11817239+02:00","level":"INFO","msg":"sender: started","stream_id":"w9uls297"}
+{"time":"2025-07-15T15:10:28.472936251+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-15T15:11:38.777174855+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-15T15:11:38.777232472+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-15T15:11:39.740153799+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-w9uls297-confusion_matrix_table","runtime_seconds":1.00356991,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.280587816,"progress":"659B/659B"}]},{"desc":"uploading media/table/confusion_matrix_table_100_e085ac0d05f79832af2d.table.json","runtime_seconds":0.77861203,"progress":"194B/194B"},{"desc":"uploading wandb-summary.json","runtime_seconds":0.77860086,"progress":"984B/984B"},{"desc":"uploading config.yaml","runtime_seconds":0.585867429,"progress":"2.9KB/2.9KB"}],"total_operations":4}}
+{"time":"2025-07-15T15:11:41.094961409+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-15T15:11:41.310552554+02:00","level":"INFO","msg":"stream: closing","id":"w9uls297"}
+{"time":"2025-07-15T15:11:41.310563044+02:00","level":"INFO","msg":"handler: closed","stream_id":"w9uls297"}
+{"time":"2025-07-15T15:11:41.310571179+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"w9uls297"}
+{"time":"2025-07-15T15:11:41.310577691+02:00","level":"INFO","msg":"sender: closed","stream_id":"w9uls297"}
+{"time":"2025-07-15T15:11:41.310609631+02:00","level":"INFO","msg":"stream: closed","id":"w9uls297"}

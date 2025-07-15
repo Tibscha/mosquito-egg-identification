@@ -1,0 +1,16 @@
+{"time":"2025-07-15T10:59:41.282945713+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250715_105941-6vjapo63/logs/debug-core.log"}
+{"time":"2025-07-15T10:59:41.551340389+02:00","level":"INFO","msg":"stream: created new stream","id":"6vjapo63"}
+{"time":"2025-07-15T10:59:41.551366187+02:00","level":"INFO","msg":"stream: started","id":"6vjapo63"}
+{"time":"2025-07-15T10:59:41.55137843+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"6vjapo63"}
+{"time":"2025-07-15T10:59:41.551400471+02:00","level":"INFO","msg":"sender: started","stream_id":"6vjapo63"}
+{"time":"2025-07-15T10:59:41.551387748+02:00","level":"INFO","msg":"handler: started","stream_id":"6vjapo63"}
+{"time":"2025-07-15T10:59:41.813113753+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-15T11:00:41.675956062+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-15T11:00:41.675982491+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-15T11:00:42.677273681+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-6vjapo63-confusion_matrix_table","runtime_seconds":1.003761612,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.329464066,"progress":"659B/659B"}]}],"total_operations":1}}
+{"time":"2025-07-15T11:00:43.95412583+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-15T11:00:44.135916494+02:00","level":"INFO","msg":"stream: closing","id":"6vjapo63"}
+{"time":"2025-07-15T11:00:44.135926012+02:00","level":"INFO","msg":"handler: closed","stream_id":"6vjapo63"}
+{"time":"2025-07-15T11:00:44.135933466+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"6vjapo63"}
+{"time":"2025-07-15T11:00:44.135944416+02:00","level":"INFO","msg":"sender: closed","stream_id":"6vjapo63"}
+{"time":"2025-07-15T11:00:44.135966708+02:00","level":"INFO","msg":"stream: closed","id":"6vjapo63"}

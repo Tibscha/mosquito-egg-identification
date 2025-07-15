@@ -1,0 +1,16 @@
+{"time":"2025-07-15T15:27:18.092038966+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250715_152718-hpepkx85/logs/debug-core.log"}
+{"time":"2025-07-15T15:27:18.322778518+02:00","level":"INFO","msg":"stream: created new stream","id":"hpepkx85"}
+{"time":"2025-07-15T15:27:18.322803584+02:00","level":"INFO","msg":"stream: started","id":"hpepkx85"}
+{"time":"2025-07-15T15:27:18.322815036+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"hpepkx85"}
+{"time":"2025-07-15T15:27:18.322825265+02:00","level":"INFO","msg":"sender: started","stream_id":"hpepkx85"}
+{"time":"2025-07-15T15:27:18.322834823+02:00","level":"INFO","msg":"handler: started","stream_id":"hpepkx85"}
+{"time":"2025-07-15T15:27:18.626333239+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-15T15:28:30.283855429+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-15T15:28:30.283885765+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-15T15:28:31.28528763+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-hpepkx85-confusion_matrix_table","runtime_seconds":1.003813598,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.219464804,"progress":"659B/659B"}]},{"desc":"uploading media/table/confusion_matrix_table_100_79e2d4efb6d17bc02548.table.json","runtime_seconds":0.800135447,"progress":"194B/194B"}],"total_operations":2}}
+{"time":"2025-07-15T15:28:32.579825543+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-15T15:28:32.777017293+02:00","level":"INFO","msg":"stream: closing","id":"hpepkx85"}
+{"time":"2025-07-15T15:28:32.777027111+02:00","level":"INFO","msg":"handler: closed","stream_id":"hpepkx85"}
+{"time":"2025-07-15T15:28:32.777037841+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"hpepkx85"}
+{"time":"2025-07-15T15:28:32.777046257+02:00","level":"INFO","msg":"sender: closed","stream_id":"hpepkx85"}
+{"time":"2025-07-15T15:28:32.777078868+02:00","level":"INFO","msg":"stream: closed","id":"hpepkx85"}

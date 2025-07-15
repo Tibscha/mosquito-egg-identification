@@ -1,0 +1,16 @@
+{"time":"2025-07-15T11:23:29.926947907+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250715_112329-a23hrrpa/logs/debug-core.log"}
+{"time":"2025-07-15T11:23:30.165401766+02:00","level":"INFO","msg":"stream: created new stream","id":"a23hrrpa"}
+{"time":"2025-07-15T11:23:30.165427584+02:00","level":"INFO","msg":"stream: started","id":"a23hrrpa"}
+{"time":"2025-07-15T11:23:30.165437894+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"a23hrrpa"}
+{"time":"2025-07-15T11:23:30.165456779+02:00","level":"INFO","msg":"handler: started","stream_id":"a23hrrpa"}
+{"time":"2025-07-15T11:23:30.165442763+02:00","level":"INFO","msg":"sender: started","stream_id":"a23hrrpa"}
+{"time":"2025-07-15T11:23:30.422037851+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-15T11:24:56.114497506+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-15T11:24:56.114532441+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-15T11:24:57.115816158+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-a23hrrpa-confusion_matrix_table","runtime_seconds":1.003730717,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.311060061,"progress":"659B/659B"}]}],"total_operations":1}}
+{"time":"2025-07-15T11:24:58.359655503+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-15T11:24:58.552848774+02:00","level":"INFO","msg":"stream: closing","id":"a23hrrpa"}
+{"time":"2025-07-15T11:24:58.552861277+02:00","level":"INFO","msg":"handler: closed","stream_id":"a23hrrpa"}
+{"time":"2025-07-15T11:24:58.55287331+02:00","level":"INFO","msg":"sender: closed","stream_id":"a23hrrpa"}
+{"time":"2025-07-15T11:24:58.552870464+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"a23hrrpa"}
+{"time":"2025-07-15T11:24:58.552913405+02:00","level":"INFO","msg":"stream: closed","id":"a23hrrpa"}

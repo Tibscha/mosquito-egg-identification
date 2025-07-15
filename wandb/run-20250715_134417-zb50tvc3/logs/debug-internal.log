@@ -1,0 +1,16 @@
+{"time":"2025-07-15T13:44:17.69755579+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250715_134417-zb50tvc3/logs/debug-core.log"}
+{"time":"2025-07-15T13:44:17.949775539+02:00","level":"INFO","msg":"stream: created new stream","id":"zb50tvc3"}
+{"time":"2025-07-15T13:44:17.949803341+02:00","level":"INFO","msg":"stream: started","id":"zb50tvc3"}
+{"time":"2025-07-15T13:44:17.949811336+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"zb50tvc3"}
+{"time":"2025-07-15T13:44:17.949830922+02:00","level":"INFO","msg":"sender: started","stream_id":"zb50tvc3"}
+{"time":"2025-07-15T13:44:17.94981911+02:00","level":"INFO","msg":"handler: started","stream_id":"zb50tvc3"}
+{"time":"2025-07-15T13:44:18.19931819+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-15T13:45:32.38095341+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-15T13:45:32.380983947+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-15T13:45:33.382326162+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-zb50tvc3-confusion_matrix_table","runtime_seconds":1.003864654}],"total_operations":1}}
+{"time":"2025-07-15T13:45:34.065899294+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-15T13:45:34.222682271+02:00","level":"INFO","msg":"stream: closing","id":"zb50tvc3"}
+{"time":"2025-07-15T13:45:34.222691077+02:00","level":"INFO","msg":"handler: closed","stream_id":"zb50tvc3"}
+{"time":"2025-07-15T13:45:34.222704252+02:00","level":"INFO","msg":"sender: closed","stream_id":"zb50tvc3"}
+{"time":"2025-07-15T13:45:34.222704262+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"zb50tvc3"}
+{"time":"2025-07-15T13:45:34.2227459+02:00","level":"INFO","msg":"stream: closed","id":"zb50tvc3"}

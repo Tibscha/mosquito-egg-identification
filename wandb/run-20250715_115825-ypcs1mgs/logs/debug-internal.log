@@ -1,0 +1,16 @@
+{"time":"2025-07-15T11:58:25.550061303+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250715_115825-ypcs1mgs/logs/debug-core.log"}
+{"time":"2025-07-15T11:58:25.80013416+02:00","level":"INFO","msg":"stream: created new stream","id":"ypcs1mgs"}
+{"time":"2025-07-15T11:58:25.800165799+02:00","level":"INFO","msg":"stream: started","id":"ypcs1mgs"}
+{"time":"2025-07-15T11:58:25.800181228+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"ypcs1mgs"}
+{"time":"2025-07-15T11:58:25.800201185+02:00","level":"INFO","msg":"sender: started","stream_id":"ypcs1mgs"}
+{"time":"2025-07-15T11:58:25.800191457+02:00","level":"INFO","msg":"handler: started","stream_id":"ypcs1mgs"}
+{"time":"2025-07-15T11:58:26.029170861+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-15T11:59:23.675080388+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-15T11:59:23.675110915+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-15T11:59:24.676544528+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-ypcs1mgs-confusion_matrix_table","runtime_seconds":1.004289947,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.32201005,"progress":"659B/659B"}]}],"total_operations":1}}
+{"time":"2025-07-15T11:59:25.965326322+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-15T11:59:26.171499684+02:00","level":"INFO","msg":"stream: closing","id":"ypcs1mgs"}
+{"time":"2025-07-15T11:59:26.171508801+02:00","level":"INFO","msg":"handler: closed","stream_id":"ypcs1mgs"}
+{"time":"2025-07-15T11:59:26.171515804+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"ypcs1mgs"}
+{"time":"2025-07-15T11:59:26.171522807+02:00","level":"INFO","msg":"sender: closed","stream_id":"ypcs1mgs"}
+{"time":"2025-07-15T11:59:26.171555618+02:00","level":"INFO","msg":"stream: closed","id":"ypcs1mgs"}

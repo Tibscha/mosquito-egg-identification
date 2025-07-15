@@ -1,0 +1,16 @@
+{"time":"2025-07-15T12:45:04.40415974+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250715_124504-kvr5m8lu/logs/debug-core.log"}
+{"time":"2025-07-15T12:45:04.650882105+02:00","level":"INFO","msg":"stream: created new stream","id":"kvr5m8lu"}
+{"time":"2025-07-15T12:45:04.650907573+02:00","level":"INFO","msg":"stream: started","id":"kvr5m8lu"}
+{"time":"2025-07-15T12:45:04.650918333+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"kvr5m8lu"}
+{"time":"2025-07-15T12:45:04.650928893+02:00","level":"INFO","msg":"handler: started","stream_id":"kvr5m8lu"}
+{"time":"2025-07-15T12:45:04.650932169+02:00","level":"INFO","msg":"sender: started","stream_id":"kvr5m8lu"}
+{"time":"2025-07-15T12:45:04.876646613+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-15T12:46:00.978377331+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-15T12:46:00.978408389+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-15T12:46:01.979716879+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-kvr5m8lu-confusion_matrix_table","runtime_seconds":1.259749062,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.629307137,"progress":"659B/659B"}]}],"total_operations":1}}
+{"time":"2025-07-15T12:46:02.957626995+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-15T12:46:03.17002029+02:00","level":"INFO","msg":"stream: closing","id":"kvr5m8lu"}
+{"time":"2025-07-15T12:46:03.170043994+02:00","level":"INFO","msg":"handler: closed","stream_id":"kvr5m8lu"}
+{"time":"2025-07-15T12:46:03.170056027+02:00","level":"INFO","msg":"sender: closed","stream_id":"kvr5m8lu"}
+{"time":"2025-07-15T12:46:03.170051799+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"kvr5m8lu"}
+{"time":"2025-07-15T12:46:03.170096693+02:00","level":"INFO","msg":"stream: closed","id":"kvr5m8lu"}

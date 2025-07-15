@@ -1,38 +1,43 @@
+import skimage
+import os
+import glob
+import importlib
 import wandb
 import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 import egg_class_functions as ecf
 import tensorflow as tf
-import glob
-import os
-from tensorflow import keras
-from tensorflow.keras import layers # type: ignore
+import albumentations as A
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import confusion_matrix
+from tensorflow.keras import layers # type: ignore
+from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.utils import to_categorical # type: ignore
 from wandb.integration.keras import WandbMetricsLogger, WandbModelCheckpoint
 from tensorflow.keras.callbacks import ModelCheckpoint # type: ignore
+from tensorflow import keras
+from tensorflow.data import AUTOTUNE # type: ignore
 
 seg_data_path = "Data/processed/predicted_segmentation_data.csv"
 image_paths = sorted(glob.glob("Data/raw/microscope/**/*.*", recursive=True), key=lambda x: (os.path.dirname(x), os.path.basename(x)))
 BATCH_SIZE = 32
 EPOCHS = 100
-AUTOTUNE = tf.data.AUTOTUNE
+height = 200
+width = 100
 
 df_pred = ecf.segmented_image_import(seg_data_path)
 single_egg_df = df_pred.loc[df_pred["single"] == 1].reset_index(drop=True)
 single_egg_df = single_egg_df.dropna()
-single_egg_df["segment"] = single_egg_df.apply(ecf.rotate_and_pad_rgb_segment, axis=1)
+results = single_egg_df.apply(ecf.pad_rgb_segment, output_shape=(height, width), axis=1)
+single_egg_df["segment"] = results.apply(lambda x: x["segment"])
+single_egg_df["mask"] = results.apply(lambda x: x["mask"])
 single_egg_df['species'] = single_egg_df['species'].replace("aegypti_old", "aegypti")
 single_egg_df['species'] = single_egg_df['species'].replace("albopictus_old", "albopictus")
-train, test = train_test_split(single_egg_df, test_size=0.1)
 
-X_train = single_egg_df['segment']
-X_train = np.stack(X_train.to_list()).astype(np.float32)
+X_train = single_egg_df.loc[:, ['segment', 'mask']]
 y_train = single_egg_df['species']
-X_test = test['segment']
-X_test = np.stack(X_test.to_list()).astype(np.float32)
-y_test = test['species']
+
 label_encoder = LabelEncoder()
 y_train_encoded = label_encoder.fit_transform(y_train)
 y_train_onehot = to_categorical(y_train_encoded)
@@ -40,35 +45,48 @@ y_train_onehot = to_categorical(y_train_encoded)
 X_train_split, X_val_split, y_train_split, y_val_split = train_test_split(
     X_train, y_train_onehot, test_size=0.2, random_state=42)
 
-data_augmentation = tf.keras.Sequential([
-  layers.RandomFlip("horizontal_and_vertical"),
-  layers.RandomRotation(0.0277),
-  layers.RandomBrightness(factor=0.2),
-  layers.RandomContrast(factor=0.2),
-  layers.RandomColorJitter(
-      value_range=(0, 1),
-      brightness_factor=0.2,
-      contrast_factor=0.2,
-      saturation_factor=0.5,
-      hue_factor=(0.5, 0.5)
-      ),
-  layers.RandomColorDegeneration(0.2),
-  layers.RandomHue(factor=(0.5, 0.5), value_range=(0, 1)),
-  layers.RandomSaturation(factor=0.5, value_range=(0, 1)),
-  layers.RandomGaussianBlur(factor=0.2, sigma=(0.1, 0.4), value_range=(0, 1)),
-
+color_trans = A.Compose([
+    # Image Capture Variance
+    #A.ISONoise(color_shift=(0.01, 0.05), intensity=(0.1, 0.5), p=.5),
+    #A.PlanckianJitter(p=.5),
+    #A.ImageCompression(quality_lower=75, quality_upper=100, p=.25),
+    #A.Defocus(radius=(1, 3), p=.25),
+    #A.RandomGamma(gamma_limit=(80, 120), p=.25),
+    #A.MotionBlur(blur_limit=(3, 3), p=.25),
+    #A.Downscale(scale_min=0.75, scale_max=1, p=.25),
+    # Color Changes
+    #A.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2, p=.5),
+    #A.ChannelDropout(channel_drop_range=(1, 1), p=.25),
+    #A.RandomShadow(shadow_roi=(0.3,0,0.7,1),p=0.25),
+    # Noise
+    #A.MultiplicativeNoise(multiplier=(0.9, 1.1), per_channel=True, p=.25),
+    A.HorizontalFlip(p=0.5),
+    A.VerticalFlip(p=0.5),
+    A.ShiftScaleRotate(shift_limit=(0, 0.0625), scale_limit=0.0, rotate_limit=(-5, 5), p=0.5),
 ])
 
-train_ds = ecf.prepare_dataset_tf(X_train_split, y_train_split, data_augmentation, BATCH_SIZE)
-val_ds = ecf.prepare_dataset_tf(X_val_split, y_val_split, data_augmentation, BATCH_SIZE, shuffle=False)
 
-weight_for_albo = (1 / sum(single_egg_df['species'] == 'albopictus')) * (len(single_egg_df))
-weight_for_aegy = (1 / sum(single_egg_df['species'] == 'aegypti')) * (len(single_egg_df))
+def albumentations_augment(image, mask):
+    image = image.astype(np.uint8)
+    augmented = color_trans(image=image)
+    #augmented = augmented * mask
 
-class_weight = {0: weight_for_albo, 1: weight_for_aegy}
+    aug_image = augmented['image'].astype(np.float32)
+    aug_image *= mask[..., np.newaxis]
+
+    return aug_image
+
+
+def tf_albumentations_augment(image, mask, label):
+    aug_image = tf.numpy_function(albumentations_augment, [image, mask], tf.float32)
+    aug_image.set_shape(image.shape)
+    return aug_image, mask, label
+
+train_ds = ecf.prepare_dataset_alb(X_train_split, y_train_split, tf_albumentations_augment, BATCH_SIZE)
+val_ds = ecf.prepare_dataset_alb(X_val_split, y_val_split, None, BATCH_SIZE, shuffle=False)
 
 base_model = tf.keras.applications.EfficientNetV2B0(
-    input_shape=(200, 200, 3),
+    input_shape=(height, width, 3),
     include_top=False,
     weights="imagenet"
 )
@@ -77,13 +95,14 @@ base_model.trainable = False
 model = tf.keras.Sequential([
     base_model,
     layers.GlobalAveragePooling2D(),
+    layers.Dropout(rate=0.25),
     layers.Dense(128, activation='relu'),
     layers.Dense(2, activation='softmax')
 ])
 
 wandb.init(project="egg-classification", config={
     "architecture": "EfficientNetV2B0",
-    "input_shape": (200, 200, 3),
+    "input_shape": (height, width, 3),
     "epochs": EPOCHS,
     "batch_size": BATCH_SIZE,
     "optimizer": "adam",
@@ -103,7 +122,7 @@ local_checkpoint = ModelCheckpoint(
 #    save_best_only=True
 #)
 
-optimizer = keras.optimizers.Adam(learning_rate=0.00001)
+optimizer = keras.optimizers.Adam(learning_rate=0.000005)
 
 model.compile(optimizer=optimizer,
               loss='categorical_crossentropy',
@@ -116,7 +135,6 @@ history = model.fit(train_ds,
                     callbacks=[WandbMetricsLogger(),
                                #wandb_checkpoint                               
                                 ],
-                    class_weight=class_weight
                     )
 
 y_true = []

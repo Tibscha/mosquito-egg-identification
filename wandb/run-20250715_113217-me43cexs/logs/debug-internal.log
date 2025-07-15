@@ -1,0 +1,16 @@
+{"time":"2025-07-15T11:32:17.423200055+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250715_113217-me43cexs/logs/debug-core.log"}
+{"time":"2025-07-15T11:32:17.655228197+02:00","level":"INFO","msg":"stream: created new stream","id":"me43cexs"}
+{"time":"2025-07-15T11:32:17.655255979+02:00","level":"INFO","msg":"stream: started","id":"me43cexs"}
+{"time":"2025-07-15T11:32:17.655263273+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"me43cexs"}
+{"time":"2025-07-15T11:32:17.65527231+02:00","level":"INFO","msg":"sender: started","stream_id":"me43cexs"}
+{"time":"2025-07-15T11:32:17.655286536+02:00","level":"INFO","msg":"handler: started","stream_id":"me43cexs"}
+{"time":"2025-07-15T11:32:17.933509232+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-15T11:33:51.371485775+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-15T11:33:51.371512184+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-15T11:33:52.372829584+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-me43cexs-confusion_matrix_table","runtime_seconds":1.003670744,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.362883572,"progress":"659B/659B"}]}],"total_operations":1}}
+{"time":"2025-07-15T11:33:53.644752506+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-15T11:33:53.812554482+02:00","level":"INFO","msg":"stream: closing","id":"me43cexs"}
+{"time":"2025-07-15T11:33:53.812563659+02:00","level":"INFO","msg":"handler: closed","stream_id":"me43cexs"}
+{"time":"2025-07-15T11:33:53.812570162+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"me43cexs"}
+{"time":"2025-07-15T11:33:53.812577786+02:00","level":"INFO","msg":"sender: closed","stream_id":"me43cexs"}
+{"time":"2025-07-15T11:33:53.812610086+02:00","level":"INFO","msg":"stream: closed","id":"me43cexs"}

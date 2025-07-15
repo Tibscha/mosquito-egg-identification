@@ -1,0 +1,16 @@
+{"time":"2025-07-15T15:17:26.815519005+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250715_151726-x3noo6wz/logs/debug-core.log"}
+{"time":"2025-07-15T15:17:27.054430028+02:00","level":"INFO","msg":"stream: created new stream","id":"x3noo6wz"}
+{"time":"2025-07-15T15:17:27.054464332+02:00","level":"INFO","msg":"stream: started","id":"x3noo6wz"}
+{"time":"2025-07-15T15:17:27.054472317+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"x3noo6wz"}
+{"time":"2025-07-15T15:17:27.054488548+02:00","level":"INFO","msg":"sender: started","stream_id":"x3noo6wz"}
+{"time":"2025-07-15T15:17:27.054480913+02:00","level":"INFO","msg":"handler: started","stream_id":"x3noo6wz"}
+{"time":"2025-07-15T15:17:27.287864729+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-15T15:18:40.99990595+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-15T15:18:40.999936266+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-15T15:18:42.001247599+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-x3noo6wz-confusion_matrix_table","runtime_seconds":1.004085181,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.26577457,"progress":"659B/659B"}]}],"total_operations":1}}
+{"time":"2025-07-15T15:18:43.390768105+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-15T15:18:43.570241004+02:00","level":"INFO","msg":"stream: closing","id":"x3noo6wz"}
+{"time":"2025-07-15T15:18:43.570250882+02:00","level":"INFO","msg":"handler: closed","stream_id":"x3noo6wz"}
+{"time":"2025-07-15T15:18:43.570257214+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"x3noo6wz"}
+{"time":"2025-07-15T15:18:43.570264768+02:00","level":"INFO","msg":"sender: closed","stream_id":"x3noo6wz"}
+{"time":"2025-07-15T15:18:43.570290957+02:00","level":"INFO","msg":"stream: closed","id":"x3noo6wz"}

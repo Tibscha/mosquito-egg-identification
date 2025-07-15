@@ -1,0 +1,23 @@
+{"time":"2025-07-14T13:44:40.373072526+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250714_134440-6q40oset/logs/debug-core.log"}
+{"time":"2025-07-14T13:44:40.615355086+02:00","level":"INFO","msg":"stream: created new stream","id":"6q40oset"}
+{"time":"2025-07-14T13:44:40.615387056+02:00","level":"INFO","msg":"stream: started","id":"6q40oset"}
+{"time":"2025-07-14T13:44:40.615395241+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"6q40oset"}
+{"time":"2025-07-14T13:44:40.61540527+02:00","level":"INFO","msg":"sender: started","stream_id":"6q40oset"}
+{"time":"2025-07-14T13:44:40.615457958+02:00","level":"INFO","msg":"handler: started","stream_id":"6q40oset"}
+{"time":"2025-07-14T13:44:40.859719915+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-14T13:45:04.655246492+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-14T13:45:05.044653545+02:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-14T13:45:06.197020682+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-14T13:45:06.575851277+02:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-14T13:45:54.858976164+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-14T13:45:55.48761402+02:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-07-14T13:45:58.025880917+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-14T13:45:58.031836065+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-14T13:45:58.031885157+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-14T13:45:58.977304604+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-14T13:45:59.033486024+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading summary","runtime_seconds":0.056114786}],"total_operations":1}}
+{"time":"2025-07-14T13:45:59.197303011+02:00","level":"INFO","msg":"stream: closing","id":"6q40oset"}
+{"time":"2025-07-14T13:45:59.19731368+02:00","level":"INFO","msg":"handler: closed","stream_id":"6q40oset"}
+{"time":"2025-07-14T13:45:59.19732403+02:00","level":"INFO","msg":"sender: closed","stream_id":"6q40oset"}
+{"time":"2025-07-14T13:45:59.197322006+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"6q40oset"}
+{"time":"2025-07-14T13:45:59.197367541+02:00","level":"INFO","msg":"stream: closed","id":"6q40oset"}

@@ -1,0 +1,44 @@
+2025-07-15 13:56:00,498 INFO    MainThread:283688 [wandb_init.py:setup_run_log_directory():703] Logging user logs to /home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250715_135600-so8p6f9f/logs/debug.log
+2025-07-15 13:56:00,498 INFO    MainThread:283688 [wandb_init.py:setup_run_log_directory():704] Logging internal logs to /home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250715_135600-so8p6f9f/logs/debug-internal.log
+2025-07-15 13:56:00,498 INFO    MainThread:283688 [wandb_init.py:monkeypatch_ipython():622] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x72c74073df10>
+2025-07-15 13:56:00,498 INFO    MainThread:283688 [wandb_init.py:init():831] calling init triggers
+2025-07-15 13:56:00,498 INFO    MainThread:283688 [wandb_init.py:init():836] wandb.init called with sweep_config: {}
+config: {'architecture': 'EfficientNetV2B0', 'input_shape': (200, 100, 3), 'epochs': 100, 'batch_size': 32, 'optimizer': 'adam', 'loss': 'categorical_crossentropy', 'num_classes': 2, '_wandb': {}}
+2025-07-15 13:56:00,498 INFO    MainThread:283688 [wandb_init.py:init():872] starting backend
+2025-07-15 13:56:00,498 INFO    MainThread:283688 [wandb_init.py:init():875] sending inform_init request
+2025-07-15 13:56:00,499 INFO    MainThread:283688 [wandb_init.py:init():883] backend started and connected
+2025-07-15 13:56:00,500 INFO    MainThread:283688 [wandb_run.py:_label_probe_notebook():1299] probe notebook
+2025-07-15 13:56:00,502 INFO    MainThread:283688 [wandb_init.py:init():956] updated telemetry
+2025-07-15 13:56:00,507 INFO    MainThread:283688 [wandb_init.py:init():980] communicating run to backend with 90.0 second timeout
+2025-07-15 13:56:01,007 INFO    MainThread:283688 [wandb_init.py:init():1032] starting run threads in backend
+2025-07-15 13:56:01,097 INFO    MainThread:283688 [wandb_run.py:_console_start():2453] atexit reg
+2025-07-15 13:56:01,097 INFO    MainThread:283688 [wandb_run.py:_redirect():2301] redirect: wrap_raw
+2025-07-15 13:56:01,098 INFO    MainThread:283688 [wandb_run.py:_redirect():2370] Wrapping output streams.
+2025-07-15 13:56:01,098 INFO    MainThread:283688 [wandb_run.py:_redirect():2393] Redirects installed.
+2025-07-15 13:56:01,098 INFO    MainThread:283688 [wandb_init.py:init():1078] run started, returning control to user process
+2025-07-15 13:56:06,753 WARNING MsgRouterThr:283688 [router.py:message_loop():63] [no run ID] message_loop has been closed
+Traceback (most recent call last):
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/interface/router_sock.py", line 27, in _read_message
+    return self._sock_client.read_server_response(timeout=1)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/sock_client.py", line 235, in read_server_response
+    data = self._read_packet_bytes(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/lib/sock_client.py", line 220, in _read_packet_bytes
+    raise SockClientClosedError
+wandb.sdk.lib.sock_client.SockClientClosedError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/interface/router.py", line 56, in message_loop
+    msg = self._read_message()
+          ^^^^^^^^^^^^^^^^^^^^
+  File "/home/tibor/Documents/Python/mosquito-egg-identification/venv/lib/python3.12/site-packages/wandb/sdk/interface/router_sock.py", line 29, in _read_message
+    raise MessageRouterClosedError from e
+wandb.sdk.interface.router.MessageRouterClosedError
+2025-07-15 13:56:06,754 INFO    MsgRouterThr:283688 [mailbox.py:close():129] [no run ID] Closing mailbox, abandoning 11 handles.
+2025-07-15 13:56:11,706 INFO    MainThread:283688 [wandb_init.py:_post_run_cell_hook():592] [no run ID] resuming backend
+2025-07-15 13:56:14,947 INFO    MainThread:283688 [jupyter.py:save_ipynb():404] [no run ID] not saving jupyter notebook
+2025-07-15 13:56:14,947 INFO    MainThread:283688 [wandb_init.py:_pre_run_cell_hook():581] [no run ID] pausing backend
+2025-07-15 13:56:15,665 INFO    MainThread:283688 [wandb_init.py:_post_run_cell_hook():592] [no run ID] resuming backend

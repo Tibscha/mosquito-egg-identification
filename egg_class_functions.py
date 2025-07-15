@@ -46,7 +46,7 @@ def gradient_sharpness(image_gray):
     return np.mean(edge)
 
 
-def resize_with_padding(image, target_width=3088, target_height=2076):
+def resize_with_padding(image, target_width, target_height):
     """
     Resize an image while preserving its aspect ratio, and pad it to match the target dimensions.
 
@@ -200,13 +200,21 @@ def segmented_image_import(data_path):
         Pandas.DataFrame: DataFrame with succesfully loaded images and masks.
     """
     df = pd.read_csv(data_path)
+    segments = []
+    masks = []
+    df["segment"] = pd.Series([None] * len(df))
+    df["mask"] = pd.Series([None] * len(df))
     for i, row in df.iterrows():
         try:
-            df.at[i, "segment"] = io.imread(row.segment_path)
-            df.at[i, "mask"] = io.imread(row.segment_mask_path)
+            #df.at[i, "segment"] = io.imread(row.segment_path)
+            #df.at[i, "mask"] = io.imread(row.segment_mask_path)
+            segments.append(io.imread(row.segment_path))
+            masks.append(io.imread(row.segment_mask_path))
         except Exception as e:
             print(f"Skipping invalid image file: {row.segment_path} ({e})")
             continue
+    df["segment"] = segments
+    df["mask"] = masks
     return df
 
 
@@ -259,7 +267,7 @@ def region_processing(image, labeled_overlay, region):
             mask (ndarray): Binary mask of the region within the bounding box.
             data (dict): Dictionary of region properties and computed features including:
                          - angle, area, perimeter, roundness, axis lengths,
-                           length/width ratio, sharpness measures, and image/mask.
+                           length/width ratio and sharpness measures.
     """
     
     # cutting out the specified region out of an image
@@ -282,8 +290,11 @@ def region_processing(image, labeled_overlay, region):
     laplacian = ecf.measure_sharpness(image_gray)
     edge = ecf.gradient_sharpness(image_gray)
     
+    angle_deg = -np.degrees(angle)
+    masked_image = rotate(masked_image, angle_deg, resize=True, preserve_range=False)
+    mask = rotate(mask, angle_deg, resize=True, preserve_range=False)
+
     data = {
-        'angle': angle,
         'area': area,
         'perimeter': perimeter,
         'roundness': roundness,
@@ -292,8 +303,6 @@ def region_processing(image, labeled_overlay, region):
         'len_wid_ratio': ratio,
         'laplacian' : laplacian,
         'edge': edge,
-        'segment': masked_image,
-        'mask': mask
     }
 
     return masked_image, mask, data
@@ -328,63 +337,66 @@ def show_images(image_df):
     plt.tight_layout()
 
 
-def rotate_and_pad_rgb_segment(row, output_shape=(200, 200)):
+def pad_rgb_segment(row, output_shape=(200, 100)):
     """
-    Rotates an RGB image based on the given angle, crops the object using the rotated mask,
-    resizes it while preserving aspect ratio, and pads it to the desired output shape.
-
-    The image, mask, and angle are expected to be contained in the given DataFrame row
-    under the keys 'segment', 'mask', and 'angle'.
-
-    Args:
-        row (pandas.Series): A row from a DataFrame containing:
-            - 'segment' (ndarray): RGB image of shape (H, W, 3)
-            - 'mask' (ndarray): Binary mask of the segmented object
-            - 'angle' (float): Rotation angle in radians (counter-clockwise)
-        output_shape (tuple of int): Desired output image shape (height, width)
+    Crops and resizes both the RGB image and its mask using the mask,
+    preserving aspect ratio and padding to the output shape.
 
     Returns:
-        ndarray: Rotated, resized, and padded RGB image of shape `output_shape` + (3,)
+        dict: {
+            'segment': padded RGB image,
+            'mask': padded binary mask
+        }
     """
     image = row["segment"]
     mask = row["mask"]
-    angle = row["angle"]
+    mask = mask / 255
+    mask = mask.astype(np.uint8)
 
     if image.ndim != 3 or image.shape[2] != 3:
-        return image
+        return {
+            "segment": image,
+            "mask": mask
+        }
 
-    if not np.isfinite(angle):
-        return image
-
-    angle_deg = -np.degrees(angle)
-    rotated_img = rotate(image, angle_deg, resize=True, preserve_range=True)
-    rotated_mask = rotate(mask.astype(float), angle_deg, resize=True) > 0.5
-
-    coords = np.argwhere(rotated_mask)
+    coords = np.argwhere(mask)
     if coords.size == 0:
-        return np.zeros((*output_shape, 3), dtype=np.uint8)
+        empty_rgb = np.zeros((*output_shape, 3), dtype=np.uint8)
+        empty_mask = np.zeros(output_shape, dtype=np.uint8)
+        return {
+            "segment": empty_rgb,
+            "mask": empty_mask
+        }
 
     y0, x0 = coords.min(axis=0)
     y1, x1 = coords.max(axis=0) + 1
-    cropped = rotated_img[y0:y1, x0:x1, :]
+    cropped_image = image[y0:y1, x0:x1, :]
+    cropped_mask = mask[y0:y1, x0:x1]
 
-    obj_h, obj_w = cropped.shape[:2]
+    obj_h, obj_w = cropped_image.shape[:2]
     target_h, target_w = output_shape
     scale = min(target_h / obj_h, target_w / obj_w)
     new_h = int(obj_h * scale)
     new_w = int(obj_w * scale)
 
-    resized = resize(cropped, (new_h, new_w, 3), preserve_range=True, anti_aliasing=True)
+    resized_image = resize(cropped_image, (new_h, new_w, 3), preserve_range=True, anti_aliasing=True)
+    resized_mask = resize(cropped_mask, (new_h, new_w), order=0, preserve_range=True, anti_aliasing=False)
 
-    padded = np.zeros((target_h, target_w, 3), dtype=resized.dtype)
+    padded_image = np.zeros((target_h, target_w, 3), dtype=resized_image.dtype)
+    padded_mask = np.zeros((target_h, target_w), dtype=resized_mask.dtype)
+
     start_y = (target_h - new_h) // 2
     start_x = (target_w - new_w) // 2
-    padded[start_y:start_y+new_h, start_x:start_x+new_w, :] = resized
+    padded_image[start_y:start_y+new_h, start_x:start_x+new_w, :] = resized_image
+    padded_mask[start_y:start_y+new_h, start_x:start_x+new_w] = resized_mask
 
-    padded = np.clip(padded, 0, 255)
-    padded = padded.astype(np.uint8)
+    padded_image = np.clip(padded_image, 0, 255).astype(np.uint8)
+    padded_mask = (padded_mask > 0.5).astype(np.uint8)
 
-    return padded
+    return {
+        "segment": padded_image,
+        "mask": padded_mask
+    }
 
 
 def prepare_dataset_tf(X, y, data_augmentation=None, batch_size=32, shuffle=True):
@@ -422,21 +434,35 @@ def prepare_dataset_alb(X, y, augment_fn=None, batch_size=32, shuffle=True):
     - X: numpy array oder list of arrays, shape (num_samples, 200, 100, 3)
     - y: list oder array von int64-Labels
     - batch_size: Größe pro Batch
-    - shuffle: True/False – ob das Dataset geshuffelt wird
+    - shuffle: True/False ob das Dataset geshuffelt wird
     """
 
-    def preprocess(img, label):
+    def preprocess_train(img, mask, label):
+        img = tf.cast(img, tf.float32)
+        img = preprocess_input(img)
+        label = tf.cast(label, tf.int32)
+        return img, mask, label
+    
+    def preprocess_val(img, label):
         img = tf.cast(img, tf.float32)
         img = preprocess_input(img)
         label = tf.cast(label, tf.int32)
         return img, label
-
-    ds = tf.data.Dataset.from_tensor_slices((X, y))
-    ds = ds.map(preprocess, num_parallel_calls=tf.data.AUTOTUNE)
+    
+    images = np.stack(X['segment'].values)
+    mask = np.stack(X['mask'].values)
+    
+    if augment_fn:
+        ds = tf.data.Dataset.from_tensor_slices((images, mask, y))
+        ds = ds.map(preprocess_train, num_parallel_calls=tf.data.AUTOTUNE)
+        ds = ds.map(augment_fn, num_parallel_calls=tf.data.AUTOTUNE)
+        ds = ds.map(lambda img, mask, label: (img, label), num_parallel_calls=tf.data.AUTOTUNE)
+    else:
+        ds = tf.data.Dataset.from_tensor_slices((images, y))
+        ds = ds.map(preprocess_val, num_parallel_calls=tf.data.AUTOTUNE)
+        
     if shuffle:
         ds = ds.shuffle(buffer_size=len(X))
-    if augment_fn:
-        ds = ds.map(augment_fn, num_parallel_calls=tf.data.AUTOTUNE)
     ds = ds.batch(batch_size).prefetch(buffer_size=tf.data.AUTOTUNE)
     
     return ds

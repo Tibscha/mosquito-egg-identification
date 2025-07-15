@@ -1,0 +1,16 @@
+{"time":"2025-07-15T13:37:18.098631718+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250715_133718-4asq1yar/logs/debug-core.log"}
+{"time":"2025-07-15T13:37:18.346704936+02:00","level":"INFO","msg":"stream: created new stream","id":"4asq1yar"}
+{"time":"2025-07-15T13:37:18.346738028+02:00","level":"INFO","msg":"stream: started","id":"4asq1yar"}
+{"time":"2025-07-15T13:37:18.34675003+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"4asq1yar"}
+{"time":"2025-07-15T13:37:18.346758897+02:00","level":"INFO","msg":"handler: started","stream_id":"4asq1yar"}
+{"time":"2025-07-15T13:37:18.346771761+02:00","level":"INFO","msg":"sender: started","stream_id":"4asq1yar"}
+{"time":"2025-07-15T13:37:18.648757919+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-15T13:38:29.980414006+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-15T13:38:29.980442339+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-15T13:38:30.981758565+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-4asq1yar-confusion_matrix_table","runtime_seconds":1.003667044,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.343215097,"progress":"659B/659B"}]}],"total_operations":1}}
+{"time":"2025-07-15T13:38:32.365917301+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-15T13:38:32.546318493+02:00","level":"INFO","msg":"stream: closing","id":"4asq1yar"}
+{"time":"2025-07-15T13:38:32.546330435+02:00","level":"INFO","msg":"handler: closed","stream_id":"4asq1yar"}
+{"time":"2025-07-15T13:38:32.546338831+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"4asq1yar"}
+{"time":"2025-07-15T13:38:32.546347236+02:00","level":"INFO","msg":"sender: closed","stream_id":"4asq1yar"}
+{"time":"2025-07-15T13:38:32.546379416+02:00","level":"INFO","msg":"stream: closed","id":"4asq1yar"}

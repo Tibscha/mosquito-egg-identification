@@ -1,0 +1,16 @@
+{"time":"2025-07-15T15:28:44.452526818+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250715_152844-zmi8u454/logs/debug-core.log"}
+{"time":"2025-07-15T15:28:44.69189015+02:00","level":"INFO","msg":"stream: created new stream","id":"zmi8u454"}
+{"time":"2025-07-15T15:28:44.691916619+02:00","level":"INFO","msg":"stream: started","id":"zmi8u454"}
+{"time":"2025-07-15T15:28:44.691925416+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"zmi8u454"}
+{"time":"2025-07-15T15:28:44.691939572+02:00","level":"INFO","msg":"sender: started","stream_id":"zmi8u454"}
+{"time":"2025-07-15T15:28:44.691929103+02:00","level":"INFO","msg":"handler: started","stream_id":"zmi8u454"}
+{"time":"2025-07-15T15:28:44.91600805+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-15T15:29:55.740097149+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-15T15:29:55.74012978+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-15T15:29:56.741533702+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-zmi8u454-confusion_matrix_table","runtime_seconds":1.004039422,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.339353417,"progress":"659B/659B"}]}],"total_operations":1}}
+{"time":"2025-07-15T15:29:58.017577335+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-15T15:29:58.229343445+02:00","level":"INFO","msg":"stream: closing","id":"zmi8u454"}
+{"time":"2025-07-15T15:29:58.229353684+02:00","level":"INFO","msg":"handler: closed","stream_id":"zmi8u454"}
+{"time":"2025-07-15T15:29:58.229364434+02:00","level":"INFO","msg":"sender: closed","stream_id":"zmi8u454"}
+{"time":"2025-07-15T15:29:58.229360096+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"zmi8u454"}
+{"time":"2025-07-15T15:29:58.229390032+02:00","level":"INFO","msg":"stream: closed","id":"zmi8u454"}

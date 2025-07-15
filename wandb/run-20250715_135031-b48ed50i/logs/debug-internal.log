@@ -1,0 +1,16 @@
+{"time":"2025-07-15T13:50:31.802788653+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250715_135031-b48ed50i/logs/debug-core.log"}
+{"time":"2025-07-15T13:50:32.037473938+02:00","level":"INFO","msg":"stream: created new stream","id":"b48ed50i"}
+{"time":"2025-07-15T13:50:32.037503924+02:00","level":"INFO","msg":"stream: started","id":"b48ed50i"}
+{"time":"2025-07-15T13:50:32.037515125+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"b48ed50i"}
+{"time":"2025-07-15T13:50:32.037526356+02:00","level":"INFO","msg":"handler: started","stream_id":"b48ed50i"}
+{"time":"2025-07-15T13:50:32.037533519+02:00","level":"INFO","msg":"sender: started","stream_id":"b48ed50i"}
+{"time":"2025-07-15T13:50:32.323822471+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-15T13:51:47.72824456+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-15T13:51:47.728276269+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-15T13:51:48.729594198+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact run-b48ed50i-confusion_matrix_table","runtime_seconds":1.003886604,"subtasks":[{"desc":"confusion_matrix_table.table.json","runtime_seconds":0.354976896,"progress":"659B/659B"}]}],"total_operations":1}}
+{"time":"2025-07-15T13:51:49.919256868+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-15T13:51:50.096754429+02:00","level":"INFO","msg":"stream: closing","id":"b48ed50i"}
+{"time":"2025-07-15T13:51:50.096763496+02:00","level":"INFO","msg":"handler: closed","stream_id":"b48ed50i"}
+{"time":"2025-07-15T13:51:50.09677646+02:00","level":"INFO","msg":"sender: closed","stream_id":"b48ed50i"}
+{"time":"2025-07-15T13:51:50.09677135+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"b48ed50i"}
+{"time":"2025-07-15T13:51:50.096801366+02:00","level":"INFO","msg":"stream: closed","id":"b48ed50i"}

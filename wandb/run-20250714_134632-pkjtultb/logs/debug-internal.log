@@ -1,0 +1,17 @@
+{"time":"2025-07-14T13:46:33.895285143+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250714_134632-pkjtultb/logs/debug-core.log"}
+{"time":"2025-07-14T13:46:34.134491375+02:00","level":"INFO","msg":"stream: created new stream","id":"pkjtultb"}
+{"time":"2025-07-14T13:46:34.13451561+02:00","level":"INFO","msg":"stream: started","id":"pkjtultb"}
+{"time":"2025-07-14T13:46:34.134525539+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"pkjtultb"}
+{"time":"2025-07-14T13:46:34.134540427+02:00","level":"INFO","msg":"sender: started","stream_id":"pkjtultb"}
+{"time":"2025-07-14T13:46:34.134531069+02:00","level":"INFO","msg":"handler: started","stream_id":"pkjtultb"}
+{"time":"2025-07-14T13:46:34.365979569+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-14T13:50:21.88355625+02:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-07-14T13:50:21.88767604+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-14T13:50:21.887716416+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-14T13:50:22.826843173+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-14T13:50:22.889201658+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading summary","runtime_seconds":0.06228081}],"total_operations":1}}
+{"time":"2025-07-14T13:50:23.027130889+02:00","level":"INFO","msg":"stream: closing","id":"pkjtultb"}
+{"time":"2025-07-14T13:50:23.027141619+02:00","level":"INFO","msg":"handler: closed","stream_id":"pkjtultb"}
+{"time":"2025-07-14T13:50:23.027147721+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"pkjtultb"}
+{"time":"2025-07-14T13:50:23.027154453+02:00","level":"INFO","msg":"sender: closed","stream_id":"pkjtultb"}
+{"time":"2025-07-14T13:50:23.027207092+02:00","level":"INFO","msg":"stream: closed","id":"pkjtultb"}
