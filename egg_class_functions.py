@@ -1,5 +1,6 @@
 import os
 import skimage
+import re
 import egg_class_functions as ecf
 import numpy as np
 import pandas as pd
@@ -200,14 +201,38 @@ def segmented_image_import(data_path):
         Pandas.DataFrame: DataFrame with succesfully loaded images and masks.
     """
     df = pd.read_csv(data_path)
+    df["single"] = pd.to_numeric(df["single"]).astype(int)
+    df = df.loc[df["single"] == 1].reset_index(drop=True)
+
+    def assign_age(row):
+        if row.device == "microscope":
+            # ag_123 oder ap_456
+            m = re.match(r"(ag|ap)_(\d+)", str(row.name))
+            if m:
+                num = int(m.group(2))
+                if 1 <= num <= 200:
+                    return "prior"
+                elif 201 <= num <= 400:
+                    return "fresh"
+                elif 401 <= num <= 600:
+                    return "dried"
+        elif row.device == "phone":
+            # Name beginnt mit Datum: 2025-08-06...
+            date = str(row.name)[:10]  # yyyy-mm-dd
+            if date in ["2025-08-06", "2025-08-07"]:
+                return "fresh"
+            elif date == "2025-08-12":
+                return "dried"
+        return None
+
+    df["age"] = df.apply(assign_age, axis=1)
+
     segments = []
     masks = []
     df["segment"] = pd.Series([None] * len(df))
     df["mask"] = pd.Series([None] * len(df))
     for i, row in df.iterrows():
         try:
-            #df.at[i, "segment"] = io.imread(row.segment_path)
-            #df.at[i, "mask"] = io.imread(row.segment_mask_path)
             segments.append(io.imread(row.segment_path))
             masks.append(io.imread(row.segment_mask_path))
         except Exception as e:

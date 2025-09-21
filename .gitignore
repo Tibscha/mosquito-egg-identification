@@ -8,3 +8,5 @@ models/mask_rcnn_coco.h5
 models/model.h5
 models/model.keras
 /models-wandb
+/wandb
+/wandb
