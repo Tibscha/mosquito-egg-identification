@@ -452,7 +452,7 @@ def prepare_dataset_tf(X, y, data_augmentation=None, batch_size=32, shuffle=True
     return ds.prefetch(buffer_size=tf.data.AUTOTUNE)
 
 
-def prepare_dataset_alb(X, y, augment_fn=None, batch_size=32, shuffle=True):
+def prepare_dataset_alb(X, y, augment_fn=None, batch_size=32, shuffle=True, repeat = False):
     """
     Erstellt ein tf.data.Dataset aus Bildern und Labels und bereitet es korrekt für EfficientNetV2B0 vor.
     
@@ -485,7 +485,10 @@ def prepare_dataset_alb(X, y, augment_fn=None, batch_size=32, shuffle=True):
     else:
         ds = tf.data.Dataset.from_tensor_slices((images, y))
         ds = ds.map(preprocess_val, num_parallel_calls=tf.data.AUTOTUNE)
-        
+
+    if repeat:
+        ds = ds.repeat()
+
     if shuffle:
         ds = ds.shuffle(buffer_size=len(X))
     ds = ds.batch(batch_size).prefetch(buffer_size=tf.data.AUTOTUNE)
