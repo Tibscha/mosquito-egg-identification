@@ -22,7 +22,7 @@ seg_data_path = "Data/processed/predicted_segmentation_data.csv"
 image_paths = sorted(glob.glob("Data/raw/*/**/*.*", recursive=True), key=lambda x: (os.path.dirname(x), os.path.basename(x)))
 metrics_csv = "Data/processed/model_metrics.csv"
 BATCH_SIZE = 32
-EPOCHS = 100
+EPOCHS = 20
 SEEDS = [2, 4, 6, 8, 10]
 FINE_TUNE_EPOCHS = 20
 height = 200
@@ -35,7 +35,7 @@ all_steps_ft = FINE_TUNE_EPOCHS * 38
 warmup_steps_ft = all_steps_ft * 0.15
 decay_steps_ft = all_steps_ft * 0.85 
 
-network = "EfficientNetV2B0"
+run = "EfficientNetV2B0_20_epochs"
 optimizer_name = "AdamW"
 layer_names = "flatten_dense"
 
@@ -203,12 +203,10 @@ for subset_name, filter_func in subsets.items():
                                         ],
                             )
         
-        model.save("tmp_model.h5")
-        del model
-        tf.keras.backend.clear_session()
-        gc.collect()
+        #model.save("tmp_model.keras")
+        #del model
 
-        model = keras.models.load_model("tmp_model.h5")
+        #model = keras.models.load_model("tmp_model.h5")
         
         fine_tune_at = int(len(base_model.layers) * 0.8)
 
@@ -261,7 +259,7 @@ for subset_name, filter_func in subsets.items():
                 y_test_pred.extend(np.argmax(preds, axis=1))
 
             metrics = {
-                "network": network,
+                "run": run,
                 "subset_name": subset_name,
                 "eval_subset": eval_name,
                 "seed": seed,
@@ -274,6 +272,7 @@ for subset_name, filter_func in subsets.items():
                 "precision_test_w": precision_score(y_test_true, y_test_pred, average='weighted'),
                 "recall_test_w": recall_score(y_test_true, y_test_pred, average='weighted'),
                 "f1_test_w": f1_score(y_test_true, y_test_pred, average='weighted'),
+                "confusion_matrix": confusion_matrix(y_test_true, y_test_pred)
             }
 
             df_metrics = pd.DataFrame([metrics])
