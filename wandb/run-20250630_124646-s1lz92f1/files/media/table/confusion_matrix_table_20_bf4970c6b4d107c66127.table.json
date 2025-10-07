@@ -1,1 +1,0 @@
-{"columns": ["Actual", "Predicted", "nPredictions"], "data": [["aegypti", "aegypti", 9.0], ["aegypti", "albopictus", 11.0], ["albopictus", "aegypti", 0.0], ["albopictus", "albopictus", 8.0]]}

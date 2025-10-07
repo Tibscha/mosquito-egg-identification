@@ -1,7 +1,0 @@
-{"time":"2025-07-15T13:56:00.499394335+02:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/home/tibor/Documents/Python/mosquito-egg-identification/wandb/run-20250715_135600-so8p6f9f/logs/debug-core.log"}
-{"time":"2025-07-15T13:56:00.743639827+02:00","level":"INFO","msg":"stream: created new stream","id":"so8p6f9f"}
-{"time":"2025-07-15T13:56:00.743665384+02:00","level":"INFO","msg":"stream: started","id":"so8p6f9f"}
-{"time":"2025-07-15T13:56:00.74367925+02:00","level":"INFO","msg":"sender: started","stream_id":"so8p6f9f"}
-{"time":"2025-07-15T13:56:00.74368973+02:00","level":"INFO","msg":"handler: started","stream_id":"so8p6f9f"}
-{"time":"2025-07-15T13:56:00.743674972+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"so8p6f9f"}
-{"time":"2025-07-15T13:56:01.007986165+02:00","level":"INFO","msg":"Starting system monitor"}
