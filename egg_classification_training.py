@@ -19,7 +19,7 @@ from tensorflow.keras.callbacks import ModelCheckpoint # type: ignore
 from tensorflow import keras
 from tensorflow.data import AUTOTUNE # type: ignore
 
-seg_data_path = "Data/processed/predicted_segmentation_data.csv"
+seg_data_path = "Data/predicted_segmentation_data.csv"
 image_paths = sorted(glob.glob("Data/raw/microscope/**/*.*", recursive=True), key=lambda x: (os.path.dirname(x), os.path.basename(x)))
 BATCH_SIZE = 32
 EPOCHS = 100

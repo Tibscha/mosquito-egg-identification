@@ -11,3 +11,4 @@ models/model.keras
 /wandb
 /wandb
 Data/.sync_b802488035e5.db-wal
+/__pycache__
